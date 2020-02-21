@@ -1,0 +1,552 @@
+The tables were taken from http://www.bioinformatics.org/jambw/2/3/TranslationTables.html on 31/05/2016, and
+table delimiters ("==== Table X ====" and "=================") were added to each table.
+
+1. The Standard Code (transl_table=1)
+
+By default all transl_table in GenBank flatfiles are equal to id 1, and this is not shown. When transl_table is not equal to id 1, it is shown as a qualifier on the CDS feature.
+==== Table 1 ====
+TTT  F Phe      TCT  S Ser      TAT  Y Tyr      TGT  C Cys  
+TTC  F Phe      TCC  S Ser      TAC  Y Tyr      TGC  C Cys  
+TTA  L Leu      TCA  S Ser      TAA  * Ter      TGA  * Ter  
+TTG  L Leu i    TCG  S Ser      TAG  * Ter      TGG  W Trp  
+
+CTT  L Leu      CCT  P Pro      CAT  H His      CGT  R Arg  
+CTC  L Leu      CCC  P Pro      CAC  H His      CGC  R Arg  
+CTA  L Leu      CCA  P Pro      CAA  Q Gln      CGA  R Arg  
+CTG  L Leu i    CCG  P Pro      CAG  Q Gln      CGG  R Arg  
+
+ATT  I Ile      ACT  T Thr      AAT  N Asn      AGT  S Ser  
+ATC  I Ile      ACC  T Thr      AAC  N Asn      AGC  S Ser  
+ATA  I Ile      ACA  T Thr      AAA  K Lys      AGA  R Arg  
+ATG  M Met i    ACG  T Thr      AAG  K Lys      AGG  R Arg  
+
+GTT  V Val      GCT  A Ala      GAT  D Asp      GGT  G Gly  
+GTC  V Val      GCC  A Ala      GAC  D Asp      GGC  G Gly  
+GTA  V Val      GCA  A Ala      GAA  E Glu      GGA  G Gly  
+GTG  V Val      GCG  A Ala      GAG  E Glu      GGG  G Gly  
+=================
+
+Click here to change format
+
+Initiation Codon:
+
+AUG
+Alternative Initiation Codons
+(Prats et al. 1989; Hann et al. 1992) 
+
+CUG, UUG
+
+2. The Vertebrate Mitochondrial Code (transl_table=2)
+
+==== Table 2 ====
+TTT  F Phe      TCT  S Ser      TAT  Y Tyr      TGT  C Cys  
+TTC  F Phe      TCC  S Ser      TAC  Y Tyr      TGC  C Cys  
+TTA  L Leu      TCA  S Ser      TAA  * Ter      TGA  W Trp  
+TTG  L Leu      TCG  S Ser      TAG  * Ter      TGG  W Trp  
+
+CTT  L Leu      CCT  P Pro      CAT  H His      CGT  R Arg  
+CTC  L Leu      CCC  P Pro      CAC  H His      CGC  R Arg  
+CTA  L Leu      CCA  P Pro      CAA  Q Gln      CGA  R Arg  
+CTG  L Leu      CCG  P Pro      CAG  Q Gln      CGG  R Arg  
+
+ATT  I Ile i    ACT  T Thr      AAT  N Asn      AGT  S Ser  
+ATC  I Ile i    ACC  T Thr      AAC  N Asn      AGC  S Ser  
+ATA  M Met i    ACA  T Thr      AAA  K Lys      AGA  * Ter  
+ATG  M Met i    ACG  T Thr      AAG  K Lys      AGG  * Ter  
+
+GTT  V Val      GCT  A Ala      GAT  D Asp      GGT  G Gly  
+GTC  V Val      GCC  A Ala      GAC  D Asp      GGC  G Gly  
+GTA  V Val      GCA  A Ala      GAA  E Glu      GGA  G Gly  
+GTG  V Val i    GCG  A Ala      GAG  E Glu      GGG  G Gly  
+=================
+
+Click here to change format
+
+Differences from the Standard Code:
+
+        Code 2          Standard
+
+ AGA    Ter  *          Arg  R
+ AGG    Ter  *          Arg  R
+ AUA    Met  M          Ile  I
+ UGA    Trp  W          Ter  *
+
+Alternative Initiation Codon:
+
+Bos: AUA 
+Homo: AUA, AUU
+Mus: AUA, AUU, AUC
+Coturnix, Gallus: also GUG (Desjardins and Morais, 1991)
+Systematic Range:
+
+Vertebrata
+Comment:
+
+The transcripts of several vertebrate mitochondrial genes end in U or UA, which become termination codons (UAA) upon subsequent polyadenylation.
+3. The Yeast Mitochondrial Code (transl_table=3)
+
+==== Table 3 ====
+TTT  F Phe      TCT  S Ser      TAT  Y Tyr      TGT  C Cys  
+TTC  F Phe      TCC  S Ser      TAC  Y Tyr      TGC  C Cys  
+TTA  L Leu      TCA  S Ser      TAA  * Ter      TGA  W Trp  
+TTG  L Leu      TCG  S Ser      TAG  * Ter      TGG  W Trp  
+
+CTT  T Thr      CCT  P Pro      CAT  H His      CGT  R Arg  
+CTC  T Thr      CCC  P Pro      CAC  H His      CGC  R Arg  
+CTA  T Thr      CCA  P Pro      CAA  Q Gln      CGA  R Arg  
+CTG  T Thr      CCG  P Pro      CAG  Q Gln      CGG  R Arg  
+
+ATT  I Ile      ACT  T Thr      AAT  N Asn      AGT  S Ser  
+ATC  I Ile      ACC  T Thr      AAC  N Asn      AGC  S Ser  
+ATA  M Met      ACA  T Thr      AAA  K Lys      AGA  R Arg  
+ATG  M Met i    ACG  T Thr      AAG  K Lys      AGG  R Arg  
+
+GTT  V Val      GCT  A Ala      GAT  D Asp      GGT  G Gly  
+GTC  V Val      GCC  A Ala      GAC  D Asp      GGC  G Gly  
+GTA  V Val      GCA  A Ala      GAA  E Glu      GGA  G Gly  
+GTG  V Val      GCG  A Ala      GAG  E Glu      GGG  G Gly  
+=================
+
+Click here to change format
+
+Differences from the Standard Code:
+
+        Code 3          Standard
+
+ AUA    Met  M          Ile  I
+ CUU    Thr  T          Leu  L
+ CUC    Thr  T          Leu  L
+ CUA    Thr  T          Leu  L
+ CUG    Thr  T          Leu  L
+ UGA    Trp  W          Ter  *
+
+ CGA    absent          Arg  R
+ CGC    absent          Arg  R
+
+Systematic Range:
+
+Saccharomyces cerevisiae, Candida glabrata, Hansenula saturnus, Schizosaccharomyces pombe, and Kluyveromyces thermotolerans (Clark-Walker and Weiller, 1994)
+Comments:
+
+The remaining CGN codons are rare in Saccharomyces cerevisiae and absent in Candida glabrata (= Torulopsis glabrata).
+The AUA codon is common in the gene var1 coding for the single mitochonLIial ribosomal protein, but rare in genes encoding the enzymes.
+The coding assignments of the AUA (Met or Ile) and CUU (possibly Leu, not Thr) are uncertain in Hansenula saturnus.
+The codon UGA is rarely used and probably encodes Trp in Schizosaccharomyces pombe. Sequence comparisons do not suggest other nonstandard codon assignments in this species.
+The coding assignment of Thr to CUN is uncertain in Kluyveromyces thermotolerans Clark-Walker and Weiller, 1994).
+4. The Mold, Protozoan, and Coelenterate Mitochondrial Code and the Mycoplasma/Spiroplasma Code (transl_table=4)
+
+==== Table 4 ====
+TTT  F Phe      TCT  S Ser      TAT  Y Tyr      TGT  C Cys  
+TTC  F Phe      TCC  S Ser      TAC  Y Tyr      TGC  C Cys  
+TTA  L Leu i    TCA  S Ser      TAA  * Ter      TGA  W Trp  
+TTG  L Leu i    TCG  S Ser      TAG  * Ter      TGG  W Trp  
+
+CTT  L Leu      CCT  P Pro      CAT  H His      CGT  R Arg  
+CTC  L Leu      CCC  P Pro      CAC  H His      CGC  R Arg  
+CTA  L Leu      CCA  P Pro      CAA  Q Gln      CGA  R Arg  
+CTG  L Leu i    CCG  P Pro      CAG  Q Gln      CGG  R Arg  
+
+ATT  I Ile i    ACT  T Thr      AAT  N Asn      AGT  S Ser  
+ATC  I Ile i    ACC  T Thr      AAC  N Asn      AGC  S Ser  
+ATA  I Ile i    ACA  T Thr      AAA  K Lys      AGA  R Arg  
+ATG  M Met i    ACG  T Thr      AAG  K Lys      AGG  R Arg  
+
+GTT  V Val      GCT  A Ala      GAT  D Asp      GGT  G Gly  
+GTC  V Val      GCC  A Ala      GAC  D Asp      GGC  G Gly  
+GTA  V Val      GCA  A Ala      GAA  E Glu      GGA  G Gly  
+GTG  V Val i    GCG  A Ala      GAG  E Glu      GGG  G Gly  
+=================
+
+Click here to change format
+
+Differences from the Standard Code:
+
+        Code 4         Standard
+
+ UGA    Trp  W          Ter  *
+
+Alternative Initiation Codons:
+
+Trypanosoma: UUA, UUG, CUG
+Leishmania: AUU, AUA 
+Tertrahymena: AUU, AUA, AUG 
+Paramecium: AUU, AUA, AUG, AUC, GUG, GUA(?) 
+(Pritchard et al., 1990)
+Systematic Range:
+
+Mycoplasmatales: Mycoplasma, Spiroplasma (Bove et al., 1989);
+Fungi: Emericella nidulans, Neurospora crassa, Podospora anserina, Acremonium (Fox, 1987), Candida parapsilosis (Guelin et al., 1991), Trichophyton rubrum (de Bievre and Dujon, 1992), Dekkera/Brettanomyces, Eeniella (Hoeben et al., 1993), and probably Ascobolus immersus, Aspergillus amstelodami, Claviceps purpurea, and Cochliobolus heterostrophus.
+
+Protozoa: Trypanosoma brucei, Leishmania tarentolae, Paramecium tetraurelia, Tetrahymena pyriformis and probably Plasmodium gallinaceum (Aldritt et al., 1989)].
+
+Metazoa: Coelenterata (Ctenophora and Cnidaria)
+
+Comments:
+
+This code is also used for the kinetoplast DNA (maxicircles, minicircles). Kinetoplasts are modified mitochondria (or their parts).
+This code is not used in the Acholeplasmataceae and plant-pathogenic mycoplasma-like organisms (MLO) (Lim and Sears, 1992)
+5. The Invertebrate Mitochondrial Code (transl_table=5)
+
+==== Table 5 ====
+TTT  F Phe      TCT  S Ser      TAT  Y Tyr      TGT  C Cys  
+TTC  F Phe      TCC  S Ser      TAC  Y Tyr      TGC  C Cys  
+TTA  L Leu      TCA  S Ser      TAA  * Ter      TGA  W Trp  
+TTG  L Leu i    TCG  S Ser      TAG  * Ter      TGG  W Trp  
+
+CTT  L Leu      CCT  P Pro      CAT  H His      CGT  R Arg  
+CTC  L Leu      CCC  P Pro      CAC  H His      CGC  R Arg  
+CTA  L Leu      CCA  P Pro      CAA  Q Gln      CGA  R Arg  
+CTG  L Leu      CCG  P Pro      CAG  Q Gln      CGG  R Arg  
+
+ATT  I Ile i    ACT  T Thr      AAT  N Asn      AGT  S Ser  
+ATC  I Ile i    ACC  T Thr      AAC  N Asn      AGC  S Ser  
+ATA  M Met i    ACA  T Thr      AAA  K Lys      AGA  S Ser  
+ATG  M Met i    ACG  T Thr      AAG  K Lys      AGG  S Ser  
+
+GTT  V Val      GCT  A Ala      GAT  D Asp      GGT  G Gly  
+GTC  V Val      GCC  A Ala      GAC  D Asp      GGC  G Gly  
+GTA  V Val      GCA  A Ala      GAA  E Glu      GGA  G Gly  
+GTG  V Val i    GCG  A Ala      GAG  E Glu      GGG  G Gly  
+=================
+
+
+Click here to change format
+
+Comment:
+
+The codon AGG is absent in Drosophila.
+Differences from the Standard Code:
+
+
+        Code 5          Standard
+
+ AGA    Ser  S          Arg  R
+ AGG    Ser  S          Arg  R
+ AUA    Met  M          Ile  I
+ UGA    Trp  W          Ter  *
+
+Alternative Initiation Codons:
+
+AUA, AUU
+AUC: Apis (Crozier and Crozier, 1993)
+GUG: Polyplacophora (Boore and Brown, 1994)
+UUG: Ascaris, Caenorhabditis
+Systematic Range:
+
+Nematoda: Ascaris, Caenorhabditis;
+Mollusca: Bivalvia (Hoffmann et al., 1992); Polyplacophora (Boore and Brown, 1994)
+Arthropoda/Crustacea: Artemia (Batuecas et al., 1988);
+Arthropoda/Insecta: Drosophila [Locusta migratoria (migratory locust), Apis mellifera (honeybee)]
+Comments:
+
+GUG may possibly function as an initiator in Drosophila (Clary and Wolstenholme, 1985; Gadaleta et al., 1988). AUU is not used as an initiator in Mytilus (Hoffmann et al., 1992).
+"An exceptional mechanism must operate for initiation of translation of the cytochrome oxidase subunit I mRNA in both D. melanogaster (de Bruijn, 1983) and D. yakuba (Clary and Wolstenholme 1983), since its only plausible initiation codon, AUA, is out of frame with the rest of the gene. Initiation appears to require the "reading" of of an AUAA quadruplet, which would be equivalent to initiation at AUA followed immediately by a specific ribosomal frameshift. Another possible mechanism ... is that the mRNA is "edited" to bring the AUA initiation into frame." (Fox, 1987)
+6. The Ciliate, Dasycladacean and Hexamita Nuclear Code (transl_table=6)
+
+==== Table 6 ====
+TTT  F Phe      TCT  S Ser      TAT  Y Tyr      TGT  C Cys  
+TTC  F Phe      TCC  S Ser      TAC  Y Tyr      TGC  C Cys  
+TTA  L Leu      TCA  S Ser      TAA  Q Gln      TGA  * Ter  
+TTG  L Leu      TCG  S Ser      TAG  Q Gln      TGG  W Trp  
+
+CTT  L Leu      CCT  P Pro      CAT  H His      CGT  R Arg  
+CTC  L Leu      CCC  P Pro      CAC  H His      CGC  R Arg  
+CTA  L Leu      CCA  P Pro      CAA  Q Gln      CGA  R Arg  
+CTG  L Leu      CCG  P Pro      CAG  Q Gln      CGG  R Arg  
+
+ATT  I Ile      ACT  T Thr      AAT  N Asn      AGT  S Ser  
+ATC  I Ile      ACC  T Thr      AAC  N Asn      AGC  S Ser  
+ATA  I Ile      ACA  T Thr      AAA  K Lys      AGA  R Arg  
+ATG  M Met i    ACG  T Thr      AAG  K Lys      AGG  R Arg  
+
+GTT  V Val      GCT  A Ala      GAT  D Asp      GGT  G Gly  
+GTC  V Val      GCC  A Ala      GAC  D Asp      GGC  G Gly  
+GTA  V Val      GCA  A Ala      GAA  E Glu      GGA  G Gly  
+GTG  V Val      GCG  A Ala      GAG  E Glu      GGG  G Gly  
+=================
+
+
+Click here to change format
+
+Differences from the Standard Code:
+
+          Code 6       Standard
+
+ UAA      Gln  Q        Ter  *
+ UAG      Gln  Q        Ter  *
+
+Systematic Range:
+
+Ciliata: Oxytricha and Stylonychia (Hoffman et al. 1995), Paramecium, Tetrahymena, Oxytrichidae and probably Glaucoma chattoni.
+Dasycladaceae: Acetabularia (Schneider et al., 1989) and Batophora (Schneider and de Groot, 1991).
+
+Diplomonadida: 
+Scope: Hexamita inflata, Diplomonadida ATCC50330, and ATCC50380. 
+Ref.: Keeling, P.J. and Doolittle, W.F. 1996. A non-canonical genetic code in an early diverging eukaryotic lineage. The EMBO Journal 15, 2285-2290.
+
+Comment:
+
+The ciliate macronuclear code has not been determined completely. The codon UAA is known to code for Gln only in the Oxytrichidae.
+Tables 7 and 8 have been deleted
+
+9. The Echinoderm Mitochondrial Code (transl_table=9)
+
+==== Table 9 ====
+TTT  F Phe      TCT  S Ser      TAT  Y Tyr      TGT  C Cys  
+TTC  F Phe      TCC  S Ser      TAC  Y Tyr      TGC  C Cys  
+TTA  L Leu      TCA  S Ser      TAA  * Ter      TGA  W Trp  
+TTG  L Leu      TCG  S Ser      TAG  * Ter      TGG  W Trp  
+
+CTT  L Leu      CCT  P Pro      CAT  H His      CGT  R Arg  
+CTC  L Leu      CCC  P Pro      CAC  H His      CGC  R Arg  
+CTA  L Leu      CCA  P Pro      CAA  Q Gln      CGA  R Arg  
+CTG  L Leu      CCG  P Pro      CAG  Q Gln      CGG  R Arg  
+
+ATT  I Ile      ACT  T Thr      AAT  N Asn      AGT  S Ser  
+ATC  I Ile      ACC  T Thr      AAC  N Asn      AGC  S Ser  
+ATA  I Ile      ACA  T Thr      AAA  N Asn      AGA  S Ser  
+ATG  M Met i    ACG  T Thr      AAG  K Lys      AGG  S Ser  
+
+GTT  V Val      GCT  A Ala      GAT  D Asp      GGT  G Gly  
+GTC  V Val      GCC  A Ala      GAC  D Asp      GGC  G Gly  
+GTA  V Val      GCA  A Ala      GAA  E Glu      GGA  G Gly  
+GTG  V Val      GCG  A Ala      GAG  E Glu      GGG  G Gly  
+=================
+
+
+Click here to change format
+
+Differences from the Standard Code:
+
+
+          Code 9        Standard
+
+ AAA      Asn  N        Lys K
+ AGA      Ser  S        Arg R
+ AGG      Ser  S        Arg R
+ UGA      Trp  W        Ter *
+
+Systematic Range:
+
+Asterozoa (starfishes) (Himeno et al., 1987) Echinozoa (sea urchins) (Jacobs et al., 1988; Cantatore et al., 1989)
+10. The Euplotid Nuclear Code (transl_table=10)
+
+==== Table 10 ====
+TTT  F Phe      TCT  S Ser      TAT  Y Tyr      TGT  C Cys  
+TTC  F Phe      TCC  S Ser      TAC  Y Tyr      TGC  C Cys  
+TTA  L Leu      TCA  S Ser      TAA  * Ter      TGA  C Cys  
+TTG  L Leu      TCG  S Ser      TAG  * Ter      TGG  W Trp  
+
+CTT  L Leu      CCT  P Pro      CAT  H His      CGT  R Arg  
+CTC  L Leu      CCC  P Pro      CAC  H His      CGC  R Arg  
+CTA  L Leu      CCA  P Pro      CAA  Q Gln      CGA  R Arg  
+CTG  L Leu      CCG  P Pro      CAG  Q Gln      CGG  R Arg  
+
+ATT  I Ile      ACT  T Thr      AAT  N Asn      AGT  S Ser  
+ATC  I Ile      ACC  T Thr      AAC  N Asn      AGC  S Ser  
+ATA  I Ile      ACA  T Thr      AAA  K Lys      AGA  R Arg  
+ATG  M Met i    ACG  T Thr      AAG  K Lys      AGG  R Arg  
+
+GTT  V Val      GCT  A Ala      GAT  D Asp      GGT  G Gly  
+GTC  V Val      GCC  A Ala      GAC  D Asp      GGC  G Gly  
+GTA  V Val      GCA  A Ala      GAA  E Glu      GGA  G Gly  
+GTG  V Val      GCG  A Ala      GAG  E Glu      GGG  G Gly  
+=================
+
+
+Click here to change format
+
+Differences from the Standard Code:
+
+          Code 10     Standard
+
+ UGA      Cys  C        Ter  *
+
+Systematic Range:
+
+Ciliata: Euplotidae (Hoffman et al. 1995).
+11. The Bacterial "Code" (transl_table=11)
+
+==== Table 11 ====
+TTT  F Phe      TCT  S Ser      TAT  Y Tyr      TGT  C Cys  
+TTC  F Phe      TCC  S Ser      TAC  Y Tyr      TGC  C Cys  
+TTA  L Leu      TCA  S Ser      TAA  * Ter      TGA  * Ter  
+TTG  L Leu i    TCG  S Ser      TAG  * Ter      TGG  W Trp  
+
+CTT  L Leu      CCT  P Pro      CAT  H His      CGT  R Arg  
+CTC  L Leu      CCC  P Pro      CAC  H His      CGC  R Arg  
+CTA  L Leu      CCA  P Pro      CAA  Q Gln      CGA  R Arg  
+CTG  L Leu i    CCG  P Pro      CAG  Q Gln      CGG  R Arg  
+
+ATT  I Ile i    ACT  T Thr      AAT  N Asn      AGT  S Ser  
+ATC  I Ile i    ACC  T Thr      AAC  N Asn      AGC  S Ser  
+ATA  I Ile i    ACA  T Thr      AAA  K Lys      AGA  R Arg  
+ATG  M Met i    ACG  T Thr      AAG  K Lys      AGG  R Arg  
+
+GTT  V Val      GCT  A Ala      GAT  D Asp      GGT  G Gly  
+GTC  V Val      GCC  A Ala      GAC  D Asp      GGC  G Gly  
+GTA  V Val      GCA  A Ala      GAA  E Glu      GGA  G Gly  
+GTG  V Val i    GCG  A Ala      GAG  E Glu      GGG  G Gly  
+=================
+
+
+Click here to change format
+
+Differences from the Standard Code:
+
+None
+Alternative Initiation Codons:
+
+GUG, UUG, AUU, CUG
+Systematic Range:
+
+Prokaryotes including the eubacteria (Kozak, 1983) and archaebacteria (Brown et al. 1989; Noelling et al., unpublished).
+Comments:
+
+UGA codes at low efficiency for Trp in Bacillus subtilis and, presumably, in Escherichia coli (Hatfiled and Diamond, 1993).
+CUG is known to function as an initiator for one plasmid-encoded protein (RepA) in Escherichia coli (Spiers and Bergquist, 1992) and possibly in Methanobacterium thermoautotrophicum (Noelling et al., unpublished)
+There is no record of AUU initition codon for the archaebacteria.
+12. The Alternative Yeast Nuclear Code (transl_table=12)
+
+==== Table 12 ====
+TTT  F Phe      TCT  S Ser      TAT  Y Tyr      TGT  C Cys  
+TTC  F Phe      TCC  S Ser      TAC  Y Tyr      TGC  C Cys  
+TTA  L Leu      TCA  S Ser      TAA  * Ter      TGA  * Ter  
+TTG  L Leu      TCG  S Ser      TAG  * Ter      TGG  W Trp  
+
+CTT  L Leu      CCT  P Pro      CAT  H His      CGT  R Arg  
+CTC  L Leu      CCC  P Pro      CAC  H His      CGC  R Arg  
+CTA  L Leu      CCA  P Pro      CAA  Q Gln      CGA  R Arg  
+CTG  S Ser i    CCG  P Pro      CAG  Q Gln      CGG  R Arg  
+
+ATT  I Ile      ACT  T Thr      AAT  N Asn      AGT  S Ser  
+ATC  I Ile      ACC  T Thr      AAC  N Asn      AGC  S Ser  
+ATA  I Ile      ACA  T Thr      AAA  K Lys      AGA  R Arg  
+ATG  M Met i    ACG  T Thr      AAG  K Lys      AGG  R Arg  
+
+GTT  V Val      GCT  A Ala      GAT  D Asp      GGT  G Gly  
+GTC  V Val      GCC  A Ala      GAC  D Asp      GGC  G Gly  
+GTA  V Val      GCA  A Ala      GAA  E Glu      GGA  G Gly  
+GTG  V Val      GCG  A Ala      GAG  E Glu      GGG  G Gly  
+=================
+
+
+Click here to change format
+
+Differences from the Standard Code:
+
+           Code 12      Standard
+
+ CUG       Ser          Leu
+       
+Alternative Initiation Codons:
+
+CAG may be used in Candida albicans (Santos et al., 1993).
+Systematic Range:
+
+Endomycetales (yeasts): Candida albicans, Candida cylindracea, Candida melibiosica, Candida parapsilosis, and Candida rugosa (Ohama et al., 1993).
+Comment:
+
+However, other yeast, including Saccharomyces cerevisiae, Candida azyma, Candida diversa, Candida magnoliae, Candida rugopelliculosa, Yarrowia lipolytica, and Zygoascus hellenicus, definitely use the standard (nuclear) code (Ohama et al., 1993).
+13. The Ascidian Mitochondrial Code (transl_table=13)
+
+==== Table 13 ====
+TTT  F Phe      TCT  S Ser      TAT  Y Tyr      TGT  C Cys  
+TTC  F Phe      TCC  S Ser      TAC  Y Tyr      TGC  C Cys  
+TTA  L Leu      TCA  S Ser      TAA  * Ter      TGA  W Trp  
+TTG  L Leu      TCG  S Ser      TAG  * Ter      TGG  W Trp  
+
+CTT  L Leu      CCT  P Pro      CAT  H His      CGT  R Arg  
+CTC  L Leu      CCC  P Pro      CAC  H His      CGC  R Arg  
+CTA  L Leu      CCA  P Pro      CAA  Q Gln      CGA  R Arg  
+CTG  L Leu      CCG  P Pro      CAG  Q Gln      CGG  R Arg  
+
+ATT  I Ile      ACT  T Thr      AAT  N Asn      AGT  S Ser  
+ATC  I Ile      ACC  T Thr      AAC  N Asn      AGC  S Ser  
+ATA  M Met      ACA  T Thr      AAA  K Lys      AGA  G Gly  
+ATG  M Met i    ACG  T Thr      AAG  K Lys      AGG  G Gly  
+
+GTT  V Val      GCT  A Ala      GAT  D Asp      GGT  G Gly  
+GTC  V Val      GCC  A Ala      GAC  D Asp      GGC  G Gly  
+GTA  V Val      GCA  A Ala      GAA  E Glu      GGA  G Gly  
+GTG  V Val      GCG  A Ala      GAG  E Glu      GGG  G Gly  
+=================
+
+
+Click here to change format
+
+Differences from the Standard Code:
+
+          Code 13     Standard
+
+ AGA      Gly  G        Arg  R
+ AGG      Gly  G        Arg  R
+ AUA      Met  M        Ile  I
+ UGA      Trp  W        Ter  *
+
+Systematic Range:
+
+Ascidiacea (sea squirts): Pyuridae (Durrheim et al. 1993; Yokobori et al., 1993)
+14. The Flatworm Mitochondrial Code (transl_table=14)
+
+==== Table 14 ====
+TTT  F Phe      TCT  S Ser      TAT  Y Tyr      TGT  C Cys  
+TTC  F Phe      TCC  S Ser      TAC  Y Tyr      TGC  C Cys  
+TTA  L Leu      TCA  S Ser      TAA  Y Tyr      TGA  W Trp  
+TTG  L Leu      TCG  S Ser      TAG  * Ter      TGG  W Trp  
+
+CTT  L Leu      CCT  P Pro      CAT  H His      CGT  R Arg  
+CTC  L Leu      CCC  P Pro      CAC  H His      CGC  R Arg  
+CTA  L Leu      CCA  P Pro      CAA  Q Gln      CGA  R Arg  
+CTG  L Leu      CCG  P Pro      CAG  Q Gln      CGG  R Arg  
+
+ATT  I Ile      ACT  T Thr      AAT  N Asn      AGT  S Ser  
+ATC  I Ile      ACC  T Thr      AAC  N Asn      AGC  S Ser  
+ATA  I Ile      ACA  T Thr      AAA  N Asn      AGA  S Ser  
+ATG  M Met i    ACG  T Thr      AAG  K Lys      AGG  S Ser  
+
+GTT  V Val      GCT  A Ala      GAT  D Asp      GGT  G Gly  
+GTC  V Val      GCC  A Ala      GAC  D Asp      GGC  G Gly  
+GTA  V Val      GCA  A Ala      GAA  E Glu      GGA  G Gly  
+GTG  V Val      GCG  A Ala      GAG  E Glu      GGG  G Gly  
+=================
+
+
+Click here to change format
+
+Differences from the Standard Code:
+
+          Code 14      Standard
+
+ AAA      Asn  N       Lys  K
+ AGA      Ser  S       Arg  R
+ AGG      Ser  S       Arg  R
+ UAA      Tyr  Y       Ter  *
+ UGA      Trp  W       Ter  *
+
+Systematic Range:
+
+Platyhelminthes (flatworms)
+15. Blepharisma Nuclear Code (transl_table=15)
+
+==== Table 15 ====
+TTT  F Phe      TCT  S Ser      TAT  Y Tyr      TGT  C Cys  
+TTC  F Phe      TCC  S Ser      TAC  Y Tyr      TGC  C Cys  
+TTA  L Leu      TCA  S Ser      TAA  * Ter      TGA  * Ter  
+TTG  L Leu      TCG  S Ser      TAG  Q Gln      TGG  W Trp  
+
+CTT  L Leu      CCT  P Pro      CAT  H His      CGT  R Arg  
+CTC  L Leu      CCC  P Pro      CAC  H His      CGC  R Arg  
+CTA  L Leu      CCA  P Pro      CAA  Q Gln      CGA  R Arg  
+CTG  L Leu      CCG  P Pro      CAG  Q Gln      CGG  R Arg  
+
+ATT  I Ile      ACT  T Thr      AAT  N Asn      AGT  S Ser  
+ATC  I Ile      ACC  T Thr      AAC  N Asn      AGC  S Ser  
+ATA  I Ile      ACA  T Thr      AAA  K Lys      AGA  R Arg  
+ATG  M Met i    ACG  T Thr      AAG  K Lys      AGG  R Arg  
+
+GTT  V Val      GCT  A Ala      GAT  D Asp      GGT  G Gly  
+GTC  V Val      GCC  A Ala      GAC  D Asp      GGC  G Gly  
+GTA  V Val      GCA  A Ala      GAA  E Glu      GGA  G Gly  
+GTG  V Val      GCG  A Ala      GAG  E Glu      GGG  G Gly  
+=================

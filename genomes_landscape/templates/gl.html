@@ -1,0 +1,82 @@
+{% load cms_tags sekizai_tags %}
+{% load static %}
+<html>
+    <head>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-158675469-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-158675469-1');
+    </script>
+
+        <title>Genome landscape</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="favicon.ico">
+	<link href="/media/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="/media/css/style.css" rel="stylesheet">
+    <link href="/media/css/sequence_number.css" rel="stylesheet">
+	{% render_block "css" %}
+    </head>
+    <body onload = "load_experiments()">
+	<nav class="navbar navbar-default">
+			<div class="container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header page-scroll">
+					<a class="navbar-brand page-scroll logo" href="/"><img src="/media/images/logo.png" alt="Skoltech logo"></a>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+			</div>
+			<!-- /.container-fluid -->
+		</nav>
+			<div class="container">
+				<div class="col-lg-12 text-center">
+					<div class="section-title">
+                        <h2>Genomes landscape</h2>
+                        <div class = "container">
+
+							<div class="form-group row">
+                                <div class = 'col-md-4'>
+                                <label for="file">Select experiment</label>
+								</div>
+                                <div class = 'col-md-8' id = 'experiments'>
+                                </div>
+                            </div>
+						</div>
+						<div class = "container" id = "res">
+							<div class = "row">
+								<div class = "col-md-6">
+									<div id = "plots"></div>
+								</div>
+								<div class = "col-md-6">
+									<div id = "landscape"></div>
+								</div>
+								<div class = "col-md-12">
+									<div id = 'download'></div>
+								</div>
+							</div>
+
+						</div>
+
+                    </div>
+
+				</div>
+			</div>
+        
+	{% render_block "js" %}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="/media/js/bootstrap.min.js"></script>
+    <script src="/media/js/theme-scripts.js"></script>
+    <script src="/media/js/genomes_landscape.js"></script>
+	<script src="/media/js/excellentexport.min.js"></script>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    </body>
+</html>

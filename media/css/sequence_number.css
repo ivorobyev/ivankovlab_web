@@ -1,0 +1,17 @@
+.warning{
+    color: orange;
+}
+
+.error {
+    color: red;
+}
+
+td{
+    font-family: Arial, Helvetica, sans-serif;
+}
+.table td, th {
+    text-align: center;
+}
+#seq_text {
+    height: 300px;
+}

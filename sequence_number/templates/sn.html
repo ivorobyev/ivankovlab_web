@@ -1,0 +1,140 @@
+{% load cms_tags sekizai_tags %}
+{% load static %}
+<html>
+    <head>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-158675469-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-158675469-1');
+    </script>
+
+        <title>Sequence number</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="favicon.ico">
+	<link href="/media/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="/media/css/style.css" rel="stylesheet">
+    <link href="/media/css/sequence_number.css" rel="stylesheet">
+	{% render_block "css" %}
+    </head>
+    <body>
+	<nav class="navbar navbar-default">
+			<div class="container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header page-scroll">
+					<a class="navbar-brand page-scroll logo" href="/"><img src="/media/images/logo.png" alt="Skoltech logo"></a>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+			</div>
+			<!-- /.container-fluid -->
+		</nav>
+			<div class="container">
+				<div class="col-lg-12 text-center">
+					<div class="section-title">
+                        <h2>Sequence number</h2>
+                        <p>The application calculates the number of amino acids sequences 
+                            reachable by a given number of nucleotide substitutions in the corresponding gene.</p>
+                        <p style = 'font-size: 18px;'>Citation: DN Ivankov. Exact correspondence between walk in nucleotide and protein sequence spaces. PLoS One, 2017, 12(8): e0182525. 
+                            DOI: <a href = "https://doi.org/10.1371/journal.pone.0182525​" target = "_blank">doi.org/10.1371/journal.pone.0182525​</a> &nbsp;
+                            PMID: <a href="https://ncbi.nlm.nih.gov/pubmed/28800638" target = "_blank">28800638</a></p>
+                        
+
+                    </div>
+                    <form method="post" role="input_form">
+                        {% csrf_token %}
+                        <div class = "container">
+                                
+                            <div class="form-group row">
+                                <div class = 'col-md-3'>
+                                <label for="file">Select a file</label>
+                                </div>
+                                <div class = 'col-md-3'>
+                                <input id="seq_file" name="seq_file" type="file">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class = 'col-md-3'>
+                                <label for="file">Or paste sequence(s) in this field</label>
+                                </div>
+                                <div class = 'col-md-5'>
+                                <textarea class = "form-control rounded-5" id="seq_text" name="seq_text" cols = 100></textarea>
+                                </div>
+                            </div>
+                              
+                            <div class="form-group row">
+                                <div class = 'col-md-3'>
+                                <label for = "c_table">Choose codon table type</label>
+                                </div>
+                                <div class = 'col-md-5'>
+                                <select class = "form-control" name = "codon_table" id = "c_table">
+                                  <option value="1" selected>The Standard Code</option>
+                                  <option value="2">The Vertebrate Mitochondrial Code</option>
+                                  <option value="3">The Yeast Mitochondrial Code</option>
+                                  <option value="4">The Mold, Protozoan, and Coelenterate Mitochondrial Code and the Mycoplasma/Spiroplasma Code</option>
+                                  <option value="5" >The Invertebrate Mitochondrial Code</option>
+                                  <option value="6">The Ciliate, Dasycladacean and Hexamita Nuclear Code</option>
+                                  <option value="9">The Echinoderm Mitochondrial Code</option>
+                                  <option value="10">The Euplotid Nuclear Code</option>
+                                  <option value="11" >The Bacterial "Code"</option>
+                                  <option value="12">The Alternative Yeast Nuclear Code</option>
+                                  <option value="13">VegetThe Ascidian Mitochondrial Codearian</option>
+                                  <option value="14">The Flatworm Mitochondrial Code</option>
+                                  <option value="15" >Blepharisma Nuclear Code</option>
+                                </select>
+                                </div>
+                            </div>
+                            
+                            <div class = "form-group row">
+                                <div class = 'col-md-3'>
+                                <label for = "mutate" class = "col-2 col-form-label">Mutate first codon?</label>
+                                </div>
+                                <div class = 'col-md-5'>
+                                <select class = "form-control" name = "mutate" id = "mutate">
+                                    <option value="1" selected>Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                                </div>
+                            </div>
+                    
+                            <div class="form-group row">
+                                <div class = "col-md-3">
+                                <label for = "max_n" >Maximum number of considered nucleotide substitutions</label>
+                                </div>
+                                <div class = "col-md-5">
+                                <input class = "form-control" id = "max_n" type="number" name="max_mutations" step="1" min = "1" value = "1">
+                                </div>
+                            </div>
+                    
+                            <div class="form-group row">
+                              <input id = 'clc_button' class="btn btn-primary" type="button" value="Calculate" onclick="calculate()">
+                            </div>
+                          </div>
+                          </form>
+                          
+                          
+                          <div id = 'container result'>
+                            <div id = 'len'>
+                            </div>
+                            <br/>
+                        </div>
+				</div>
+			</div>
+        
+	{% render_block "js" %}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="/media/js/bootstrap.min.js"></script>
+    <script src="/media/js/theme-scripts.js"></script>
+    <script src="/media/js/sequence_number.js"></script>
+    <script src="/media/js/excellentexport.min.js"></script>
+    </body>
+</html>
