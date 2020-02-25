@@ -188,6 +188,7 @@ function load_experiments(){
         url: "exp_list/",
         success: function(response){
             html = '<select class = "form-control" id = "experiments_list" onchange = "get_exp_data()">'
+            html += '<option disabled selected value> -- select an option -- </option>'
             $.each(response, function(index, val) {
                 html += '<option value = '+val[0]+'>'+val[1]+' </option>'
               });
