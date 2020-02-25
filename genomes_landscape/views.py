@@ -43,19 +43,131 @@ def get_fitness_distribution(request):
     return JsonResponse(exps, safe = False)
 
 @csrf_exempt
-def get__experiment_landscape(request):
+def get_experiment_landscape(request):
     exp_id = request.POST.get('choice')
 
     conn = connect_db()
     cursor = conn.cursor()
     cursor.execute('''
-                    select unnest(string_to_array(genotype, ':')) as mutation,
-                           round(phenotype::numeric, 1) as fitness,
-                           count(*) as cont_fitness
+                    with points as (
+                        select pos,
+                            fit
+                        from (
+                            select generate_series(min(pos::numeric), max(pos::numeric)) as pos
+                            from (
+                            select distinct substring(unnest(string_to_array(genotype, ':')) from '[0-9]+') as pos
+                            from genotypes
+                            where exp_id = '''+exp_id+'''
+                            ) as positions
+                        ) as all_pos
+                        cross join ( 
+                            select DISTINCT round(phenotype::numeric, 1) as fit
+                            from genotypes
+                            where exp_id = '''+exp_id+'''
+                        ) as all_fit
+                    )
+                    select pos,
+                        fit,
+                        coalesce(cont_fitness,0) as cont_fitness
+                    from points
+                    left join (
+                    select substring(unnest(string_to_array(genotype, ':')) from '[0-9]+')::numeric as mutation,
+                        round(phenotype::numeric, 1) as fitness,
+                        count(*) as cont_fitness
                     from genotypes
                     where exp_id = '''+exp_id+'''
                     group by mutation, fitness
-                        ''')
+                    ) as genotype 
+                    on points.pos = genotype.mutation and points.fit = genotype.fitness
+                    ''')
+
+    exps = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return JsonResponse(exps, safe = False)
+
+@csrf_exempt
+def average_fitness(request):
+    exp_id = request.POST.get('choice')
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute('''
+                   with points as (
+                        select pos,
+                            letter
+                        from (
+                            select generate_series(min(pos::numeric), max(pos::numeric)) as pos
+                            from (
+                            select distinct substring(unnest(string_to_array(genotype, ':')) from '[0-9]+') as pos
+                            from genotypes
+                            where exp_id = '''+exp_id+'''
+                            ) as positions
+                        ) as all_pos
+                        cross join ( 
+                            select distinct right(unnest(string_to_array(genotype, ':')),1) as letter
+                            from genotypes
+                            where exp_id = '''+exp_id+'''
+                        ) as all_letters
+                    )
+                    select points.letter as letter,
+                        pos,
+                        coalesce(avg_phenotype, 0) as avg_phenotype
+                    from points
+                    left join (
+                        select right(unnest(string_to_array(genotype, ':')),1) as letter,
+                            substring(unnest(string_to_array(genotype, ':')) from '[0-9]+')::numeric as mutation,
+                            avg(phenotype) as avg_phenotype
+                        from genotypes
+                        where exp_id = '''+exp_id+'''
+                        group by mutation, letter
+                    ) as genotype
+                    on points.pos = genotype.mutation and points.letter = genotype.letter
+                    order by letter
+                    ''')
+
+    exps = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return JsonResponse(exps, safe = False)
+
+@csrf_exempt
+def max_fitness(request):
+    exp_id = request.POST.get('choice')
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute('''
+                   with points as (
+                        select pos,
+                               letter
+                        from (
+                            select generate_series(min(pos::numeric), max(pos::numeric)) as pos
+                            from (
+                            select distinct substring(unnest(string_to_array(genotype, ':')) from '[0-9]+') as pos
+                            from genotypes
+                            where exp_id = '''+exp_id+'''
+                            ) as positions
+                        ) as all_pos
+                        cross join ( 
+                            select distinct right(unnest(string_to_array(genotype, ':')),1) as letter
+                            from genotypes
+                            where exp_id = '''+exp_id+'''
+                        ) as all_letters
+                    )
+                    select points.letter as letter,
+                           pos,
+                           coalesce(max_phenotype, 0) as max_phenotype
+                    from points
+                    left join (
+                        select right(unnest(string_to_array(genotype, ':')),1) as letter,
+                            substring(unnest(string_to_array(genotype, ':')) from '[0-9]+')::numeric as mutation,
+                            max(phenotype) as max_phenotype
+                        from genotypes
+                        where exp_id = '''+exp_id+'''
+                        group by mutation, letter
+                    ) as genotype
+                    on points.pos = genotype.mutation and points.letter = genotype.letter
+                    order by letter
+                    ''')
 
     exps = cursor.fetchall()
     cursor.close()
@@ -64,7 +176,7 @@ def get__experiment_landscape(request):
 
 @csrf_exempt
 def download_dataset(request):
-    exp_id = request.POST.get('exp_id')
+    exp_id = request.POST.get('choice')
     conn = connect_db()
     cursor = conn.cursor()
     cursor.execute('''

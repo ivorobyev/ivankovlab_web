@@ -5,7 +5,7 @@ function get_exp_data(){
         url: "fit_distribution/",
         data: {'choice' : choice},
         beforeSend: function() {
-          $("#plots").html("<p>loading</p>");
+          $("#plots").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
         },
         success: function(response){
            $("#plots").html('');
@@ -42,10 +42,10 @@ function get_exp_data(){
 
     $.ajax({
       type: "POST",
-      url: "get__experiment_landscape/",
+      url: "get_experiment_landscape/",
       data: {'choice' : choice},
       beforeSend: function() {
-        $("#landscape").html("<p>loading</p>");
+        $("#landscape").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
       },
       success: function(response){
           $("#landscape").html('')
@@ -87,8 +87,90 @@ function get_exp_data(){
 
     $.ajax({
       type: "POST",
+      url: "average_fitness/",
+      data: {'choice' : choice},
+      beforeSend: function() {
+        $("#average").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
+      },
+      success: function(response){
+          $("#average").html('')
+          x_ = []
+          y_ = []
+          z_ = []
+          $.each(response, function(index, val) {
+              x_.push(val[0])
+              y_.push(parseFloat(val[1]))
+              z_.push(val[2])
+            });
+
+            var data = [{
+              x: x_,
+              y: y_,
+              z: z_,
+              type: 'heatmap'
+            }];
+            
+            var layout = {
+              title: 'Average fitness',
+              height: 600,
+              xaxis: {
+                title: 'Amino acid'
+              },
+              yaxis: {
+                title: 'Position'
+              },
+            };
+            
+            Plotly.newPlot('average', data, layout);
+      }
+    })
+
+    $.ajax({
+      type: "POST",
+      url: "max_fitness/",
+      data: {'choice' : choice},
+      beforeSend: function() {
+        $("#max_fitness").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
+      },
+      success: function(response){
+          $("#max_fitness").html('')
+          x_ = []
+          y_ = []
+          z_ = []
+          $.each(response, function(index, val) {
+              x_.push(val[0])
+              y_.push(parseFloat(val[1]))
+              z_.push(val[2])
+            });
+
+            var data = [{
+              x: x_,
+              y: y_,
+              z: z_,
+              type: 'heatmap',
+              hoverongaps: true
+            }];
+            
+            var layout = {
+              title: 'Max fitness',
+              height: 600,
+              xaxis: {
+                title: 'Amino acid'
+              },
+              yaxis: {
+                title: 'Position'
+              },
+            };
+            
+            
+            Plotly.newPlot('max_fitness', data, layout);
+      }
+    })
+
+    $.ajax({
+      type: "POST",
       url: "download_dataset/",
-      data: {'exp_id' : choice},
+      data: {'choice' : choice},
       success: function(response){
         data = "data:text/csv;charset=utf-8," + response.map(e => e.join(";")).join("\n");
         textFile = encodeURI(data)
