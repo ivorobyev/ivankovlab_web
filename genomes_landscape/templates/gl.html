@@ -23,7 +23,8 @@
 	<link href="/media/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link href="/media/css/style.css" rel="stylesheet">
-    <link href="/media/css/sequence_number.css" rel="stylesheet">
+	<link href="/media/css/sequence_number.css" rel="stylesheet">
+	<link rel="prefetch" href='/media/images/loader.gif'>
 	{% render_block "css" %}
     </head>
     <body onload = "load_experiments()">
@@ -87,5 +88,11 @@
     <script src="/media/js/genomes_landscape.js"></script>
 	<script src="/media/js/excellentexport.min.js"></script>
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script type="text/javascript">
+		if (document.images) {
+			img1 = new Image();
+			img1.src = "/media/images/loader.gif";
+		}
+		</script>
     </body>
 </html>

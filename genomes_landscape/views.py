@@ -68,7 +68,7 @@ def get_experiment_landscape(request):
                     )
                     select pos,
                         fit,
-                        coalesce(cont_fitness,0) as cont_fitness
+                        cont_fitness
                     from points
                     left join (
                     select substring(unnest(string_to_array(genotype, ':')) from '[0-9]+')::numeric as mutation,
@@ -92,37 +92,13 @@ def average_fitness(request):
     conn = connect_db()
     cursor = conn.cursor()
     cursor.execute('''
-                   with points as (
-                        select pos,
-                            letter
-                        from (
-                            select generate_series(min(pos::numeric), max(pos::numeric)) as pos
-                            from (
-                            select distinct substring(unnest(string_to_array(genotype, ':')) from '[0-9]+') as pos
-                            from genotypes
-                            where exp_id = '''+exp_id+'''
-                            ) as positions
-                        ) as all_pos
-                        cross join ( 
-                            select distinct right(unnest(string_to_array(genotype, ':')),1) as letter
-                            from genotypes
-                            where exp_id = '''+exp_id+'''
-                        ) as all_letters
-                    )
-                    select points.letter as letter,
-                        pos,
-                        coalesce(avg_phenotype, 0) as avg_phenotype
-                    from points
-                    left join (
-                        select right(unnest(string_to_array(genotype, ':')),1) as letter,
-                            substring(unnest(string_to_array(genotype, ':')) from '[0-9]+')::numeric as mutation,
-                            avg(phenotype) as avg_phenotype
+                       select substring(unnest(string_to_array(genotype, ':')) from '[0-9]+')::numeric as mutation,
+                              right(unnest(string_to_array(genotype, ':')),1) as letter,
+                              avg(phenotype) as avg_phenotype
                         from genotypes
                         where exp_id = '''+exp_id+'''
                         group by mutation, letter
-                    ) as genotype
-                    on points.pos = genotype.mutation and points.letter = genotype.letter
-                    order by letter
+                        ORDER BY mutation
                     ''')
 
     exps = cursor.fetchall()
@@ -136,37 +112,13 @@ def max_fitness(request):
     conn = connect_db()
     cursor = conn.cursor()
     cursor.execute('''
-                   with points as (
-                        select pos,
-                               letter
-                        from (
-                            select generate_series(min(pos::numeric), max(pos::numeric)) as pos
-                            from (
-                            select distinct substring(unnest(string_to_array(genotype, ':')) from '[0-9]+') as pos
-                            from genotypes
-                            where exp_id = '''+exp_id+'''
-                            ) as positions
-                        ) as all_pos
-                        cross join ( 
-                            select distinct right(unnest(string_to_array(genotype, ':')),1) as letter
-                            from genotypes
-                            where exp_id = '''+exp_id+'''
-                        ) as all_letters
-                    )
-                    select points.letter as letter,
-                           pos,
-                           coalesce(max_phenotype, 0) as max_phenotype
-                    from points
-                    left join (
-                        select right(unnest(string_to_array(genotype, ':')),1) as letter,
-                            substring(unnest(string_to_array(genotype, ':')) from '[0-9]+')::numeric as mutation,
-                            max(phenotype) as max_phenotype
+                        select substring(unnest(string_to_array(genotype, ':')) from '[0-9]+')::numeric as mutation, 
+                               right(unnest(string_to_array(genotype, ':')),1) as letter,
+                               max(phenotype) as max_phenotype
                         from genotypes
                         where exp_id = '''+exp_id+'''
                         group by mutation, letter
-                    ) as genotype
-                    on points.pos = genotype.mutation and points.letter = genotype.letter
-                    order by letter
+                        ORDER BY mutation
                     ''')
 
     exps = cursor.fetchall()

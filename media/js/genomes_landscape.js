@@ -99,7 +99,7 @@ function get_exp_data(){
           z_ = []
           $.each(response, function(index, val) {
               x_.push(val[0])
-              y_.push(parseFloat(val[1]))
+              y_.push(val[1])
               z_.push(val[2])
             });
 
@@ -107,17 +107,20 @@ function get_exp_data(){
               x: x_,
               y: y_,
               z: z_,
-              type: 'heatmap'
+              type: 'heatmap',
+              hoverongaps: false
             }];
             
             var layout = {
               title: 'Average fitness',
               height: 600,
               xaxis: {
-                title: 'Amino acid'
+                title: 'Position',
+                type: 'category'
               },
               yaxis: {
-                title: 'Position'
+                title: 'Amino acid',
+                categoryorder: 'category descending'
               },
             };
             
@@ -139,7 +142,7 @@ function get_exp_data(){
           z_ = []
           $.each(response, function(index, val) {
               x_.push(val[0])
-              y_.push(parseFloat(val[1]))
+              y_.push(val[1])
               z_.push(val[2])
             });
 
@@ -147,18 +150,19 @@ function get_exp_data(){
               x: x_,
               y: y_,
               z: z_,
-              type: 'heatmap',
-              hoverongaps: true
+              type: 'heatmap'
             }];
             
             var layout = {
               title: 'Max fitness',
               height: 600,
               xaxis: {
-                title: 'Amino acid'
+                title: 'Position',
+                type: 'category'
               },
               yaxis: {
-                title: 'Position'
+                title: 'Amino acid',
+                categoryorder: 'category descending'
               },
             };
             
@@ -172,11 +176,12 @@ function get_exp_data(){
       url: "download_dataset/",
       data: {'choice' : choice},
       success: function(response){
-        data = "data:text/csv;charset=utf-8," + response.map(e => e.join(";")).join("\n");
-        textFile = encodeURI(data)
+        var blob = new Blob([response.map(e => e.join(";")).join("\n")], { type: 'text/csv;charset=utf-8;' });
+        textFile = URL.createObjectURL(blob)
         $('#download').html('<a id = "dwn_link">Download dataset</a>')
         $('#dwn_link').attr("href", textFile)
         $('#dwn_link').attr("download", "output.csv")
+        $('#dwn_link').attr("target", "_blank")
 
       }
     })
@@ -186,6 +191,9 @@ function load_experiments(){
     $.ajax({
         type: "POST",
         url: "exp_list/",
+        beforeSend: function() {
+          $("#experiments").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
+        },
         success: function(response){
             html = '<select class = "form-control" id = "experiments_list" onchange = "get_exp_data()">'
             html += '<option disabled selected value> -- select an option -- </option>'
