@@ -135,6 +135,32 @@ section {
 	background-color: #fec503
 }
 
+#summary{
+    margin-top: 35px;
+}
+.sequence{
+    text-align: left !important;
+}
+.sequence p{
+    font-size: 14px !important;
+    line-height: 20px !important;
+    font-family: monospace !important;
+}
+.graph-block{
+    border-bottom: 1px solid #9C9C9C;
+}
+.bt button{
+    background: none;
+    border: none;
+    margin: 15px 0 15px 0;
+    font-size: 18px
+}
+
+.bt button:hover{
+    color: #FF9F46;
+}
+
+
 @media (min-width:768px) {
 	.navbar-default
 	{

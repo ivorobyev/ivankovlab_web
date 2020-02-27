@@ -87,7 +87,7 @@ def get_experiment_landscape(request):
     return JsonResponse(exps, safe = False)
 
 @csrf_exempt
-def average_fitness(request):
+def single_mutants_fitness(request):
     exp_id = request.POST.get('choice')
     conn = connect_db()
     cursor = conn.cursor()
@@ -97,8 +97,10 @@ def average_fitness(request):
                               avg(phenotype) as avg_phenotype
                         from genotypes
                         where exp_id = '''+exp_id+'''
+                        and array_length(string_to_array(genotype, ':'), 1) = 1
                         group by mutation, letter
                         ORDER BY mutation
+
                     ''')
 
     exps = cursor.fetchall()
@@ -144,4 +146,67 @@ def download_dataset(request):
     conn.close()
     return JsonResponse(exps, safe = False)
 
+@csrf_exempt
+def average_fitness(request):
+    exp_id = request.POST.get('choice')
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute('''
+                        select substring(unnest(string_to_array(genotype, ':')) from '[0-9]+')::numeric as mutation, 
+                               right(unnest(string_to_array(genotype, ':')),1) as letter,
+                               avg(phenotype) as avg_phenotype
+                        from genotypes
+                        where exp_id = '''+exp_id+'''
+                        group by mutation, letter
+                        ORDER BY mutation
+                    ''')
+
+    exps = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return JsonResponse(exps, safe = False)
+
+@csrf_exempt
+def get_mutation_distribution(request):
+    exp_id = request.POST.get('choice')
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute('''
+                    select coalesce(array_length(string_to_array(genotype, ':'), 1), 0) as mutations_count,
+                           count(distinct genotypes) as number_of_mutations
+                    from genotypes
+                    where exp_id = '''+exp_id+'''
+                    group by mutations_count
+                        ''')
+
+    exps = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return JsonResponse(exps, safe = False)
+
+@csrf_exempt
+def get_experiment_summary(request):
+    exp_id = request.POST.get('choice')
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute('''
+                    select genotype,
+                            length(genotype),
+                            phenotype,
+                            paper,
+                            (select string_agg(pos,',')
+                                from (
+                                    select distinct substring(unnest(string_to_array(genotype, ':')) from '[0-9]+') as pos
+                                    from genotypes
+                                    where exp_id = '''+exp_id+'''
+                                    order by pos
+                                )as positions) as positions
+                        from experiments
+                        where exp_id = '''+exp_id+'''
+                        ''')
+
+    exps = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return JsonResponse(exps, safe = False)
 

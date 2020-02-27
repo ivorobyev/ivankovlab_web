@@ -7,7 +7,10 @@ urlpatterns = [
     path('exp_list/', views.get_experiments, name='get_experiments_list'),
     path('fit_distribution/', views.get_fitness_distribution, name='get_fitness_distribution'),
     path('get_experiment_landscape/', views.get_experiment_landscape, name='get__experiment_landscape'),
-    path('average_fitness/', views.average_fitness, name='average_fitness'),
+    path('single_mutants_fitness/', views.single_mutants_fitness, name='single_mutants_fitness'),
     path('max_fitness/', views.max_fitness, name='max_fitness'),
+    path('average_fitness/', views.average_fitness, name='average_fitness'),
+    path('get_mutation_distribution/', views.get_mutation_distribution, name='get_mutation_distribution'),
+    path('get_experiment_summary/', views.get_experiment_summary, name='get_experiment_summary'),
     path('download_dataset/', views.download_dataset, name='download_dataset'),
 ]

@@ -1,5 +1,6 @@
 function get_exp_data(){
     choice = $('#experiments_list').val();
+    $('#extend').remove()
     $.ajax({
         type: "POST",
         url: "fit_distribution/",
@@ -38,6 +39,83 @@ function get_exp_data(){
             var config = {responsive: true}
             Plotly.newPlot('plots', hist, layout, config );
         }
+    })
+
+    $.ajax({
+      type: "POST",
+      url: "get_experiment_summary/",
+      data: {'choice' : choice},
+      beforeSend: function() {
+        $("#summary").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
+      },
+      success: function(response){
+        if (response[0][0] == null){
+          seq = "wild type sequence not found"
+        }
+        else {
+          seq = "<div class = 'sequence'><p>"
+          positions = response[0][4].split(',').map(numStr => parseInt(numStr));
+          $.each(response[0][0].split(''), function(index, val) {
+              if (positions.includes(index+1)) {
+                seq+= "<span style = 'color: red;'>"+val+"</span>"
+              }
+              else {
+                seq+=val
+              }
+
+              if ((index+1) % 50 == 0){
+                seq+="<br/>"
+              }
+              else if ((index+1) % 10 == 0){
+                seq+="&nbsp;"
+              }
+          });
+          seq+= "<br/><span style = 'font-size: 11px'>* red color means mutated positions</span></p></div>"
+        }
+
+        $("#summary").html("<div class = 'row'><div class = 'col-md-3'>Sequence length</div><div class = 'col-md-5'>"+response[0][1]+"</div></div>\
+                            <div class = 'row'><div class = 'col-md-3'>Phenotype value</div><div class = 'col-md-5'>"+response[0][2]+"</div></div>\
+                            <div class = 'row'><div class = 'col-md-12'>"+seq+"</div></div>")
+      }
+    })
+
+    $.ajax({
+      type: "POST",
+      url: "get_mutation_distribution/",
+      data: {'choice' : choice},
+      beforeSend: function() {
+        $("#mutations").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
+      },
+      success: function(response){
+         $("#mutations").html('');
+          x_ = []
+          y_ = []
+          $.each(response, function(index, val) {
+              x_.push(val[0])
+              y_.push(val[1])
+            });
+
+          var hist = [
+              {
+                x: x_,
+                y: y_,
+                type: 'bar'
+              }
+            ];
+
+          var layout = { 
+              title: 'Mutations count distribution',
+              font: {size: 12},
+              xaxis: {
+                title: 'Mutations count'
+              },
+              yaxis: {
+                title: 'Genotypes count'
+              },
+            };
+          var config = {responsive: true}
+          Plotly.newPlot('mutations', hist, layout, config );
+      }
     })
 
     $.ajax({
@@ -87,7 +165,7 @@ function get_exp_data(){
 
     $.ajax({
       type: "POST",
-      url: "average_fitness/",
+      url: "single_mutants_fitness/",
       data: {'choice' : choice},
       beforeSend: function() {
         $("#average").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
@@ -112,7 +190,7 @@ function get_exp_data(){
             }];
             
             var layout = {
-              title: 'Average fitness',
+              title: 'Single mutations fitness',
               height: 600,
               xaxis: {
                 title: 'Position',
@@ -130,13 +208,36 @@ function get_exp_data(){
 
     $.ajax({
       type: "POST",
+      url: "download_dataset/",
+      data: {'choice' : choice},
+      success: function(response){
+        var blob = new Blob([response.map(e => e.join(";")).join("\n")], {type: 'text/csv;charset=utf-8;' });
+        textFile = URL.createObjectURL(blob)
+        $('#download').html('<a id = "dwn_link">Download dataset</a>')
+        $('#dwn_link').attr("href", textFile)
+        $('#dwn_link').attr("download", "output.csv")
+        $('#dwn_link').attr("target", "_blank")
+
+      }
+    })
+
+    $('#res').append('<div id = "extend"><h3>Extended graphs</h3></div>')
+    $('#extend').append('<div class = "graph-block bt" id = "max_fitness_heatmap"><button onclick = "max_fitness_heatmap()">Max fitness heatmap</button></div>\
+                         <div class = "graph-block bt" id = "average_fitness_heatmap"><button onclick = "average_fitness_heatmap()">Average fitness heatmap</button></div>')
+}
+
+function max_fitness_heatmap(){
+    choice = $('#experiments_list').val();
+    $('#max_fitness_heatmap').html()
+    $.ajax({
+      type: "POST",
       url: "max_fitness/",
       data: {'choice' : choice},
       beforeSend: function() {
-        $("#max_fitness").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
+        $("#max_fitness_heatmap").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
       },
       success: function(response){
-          $("#max_fitness").html('')
+          $("#max_fitness_heatmap").html('')
           x_ = []
           y_ = []
           z_ = []
@@ -166,25 +267,54 @@ function get_exp_data(){
               },
             };
             
-            
-            Plotly.newPlot('max_fitness', data, layout);
+            Plotly.newPlot('max_fitness_heatmap', data, layout);
       }
     })
+}
 
-    $.ajax({
-      type: "POST",
-      url: "download_dataset/",
-      data: {'choice' : choice},
-      success: function(response){
-        var blob = new Blob([response.map(e => e.join(";")).join("\n")], { type: 'text/csv;charset=utf-8;' });
-        textFile = URL.createObjectURL(blob)
-        $('#download').html('<a id = "dwn_link">Download dataset</a>')
-        $('#dwn_link').attr("href", textFile)
-        $('#dwn_link').attr("download", "output.csv")
-        $('#dwn_link').attr("target", "_blank")
+function average_fitness_heatmap(){
+  choice = $('#experiments_list').val();
+  $.ajax({
+    type: "POST",
+    url: "average_fitness/",
+    data: {'choice' : choice},
+    beforeSend: function() {
+      $("#average_fitness_heatmap").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
+    },
+    success: function(response){
+        $("#average_fitness_heatmap").html('')
+        x_ = []
+        y_ = []
+        z_ = []
+        $.each(response, function(index, val) {
+            x_.push(val[0])
+            y_.push(val[1])
+            z_.push(val[2])
+          });
 
-      }
-    })
+          var data = [{
+            x: x_,
+            y: y_,
+            z: z_,
+            type: 'heatmap'
+          }];
+          
+          var layout = {
+            title: 'Average fitness',
+            height: 600,
+            xaxis: {
+              title: 'Position',
+              type: 'category'
+            },
+            yaxis: {
+              title: 'Amino acid',
+              categoryorder: 'category descending'
+            },
+          };
+          
+          Plotly.newPlot('average_fitness_heatmap', data, layout);
+    }
+  })
 }
 
 function load_experiments(){
