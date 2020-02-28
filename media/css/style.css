@@ -138,6 +138,24 @@ section {
 #summary{
     margin-top: 35px;
 }
+
+#download{
+    margin-top: 5px;
+}
+
+#download a{
+    padding: 6px 8px 6px 8px;
+    margin-top: 5px;
+    background-color: rgb(31,119,180);
+    color: #fff;
+    border-radius: 5px;
+}
+
+#download a:hover{
+    background-color: #fed136;
+    color: #000;
+}
+
 .sequence{
     text-align: left !important;
 }

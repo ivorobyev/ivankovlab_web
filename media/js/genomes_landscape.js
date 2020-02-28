@@ -1,45 +1,6 @@
 function get_exp_data(){
     choice = $('#experiments_list').val();
     $('#extend').remove()
-    $.ajax({
-        type: "POST",
-        url: "fit_distribution/",
-        data: {'choice' : choice},
-        beforeSend: function() {
-          $("#plots").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
-        },
-        success: function(response){
-           $("#plots").html('');
-            x_ = []
-            y_ = []
-            $.each(response, function(index, val) {
-                x_.push(val[0])
-                y_.push(val[1])
-              });
-
-            var hist = [
-                {
-                  x: x_,
-                  y: y_,
-                  type: 'bar'
-                }
-              ];
-
-            var layout = { 
-                title: 'Phenotype distribution',
-                height: 600,
-                font: {size: 12},
-                xaxis: {
-                  title: 'Fitness'
-                },
-                yaxis: {
-                  title: 'Genotypes count'
-                },
-              };
-            var config = {responsive: true}
-            Plotly.newPlot('plots', hist, layout, config );
-        }
-    })
 
     $.ajax({
       type: "POST",
@@ -53,7 +14,7 @@ function get_exp_data(){
           seq = "wild type sequence not found"
         }
         else {
-          seq = "<div class = 'sequence'><p>"
+          seq = "<div class = 'sequence'><p>"+"&nbsp;".repeat(response[0][1].toString().length-1) + "1&nbsp;"
           positions = response[0][4].split(',').map(numStr => parseInt(numStr));
           $.each(response[0][0].split(''), function(index, val) {
               if (positions.includes(index+1)) {
@@ -64,7 +25,8 @@ function get_exp_data(){
               }
 
               if ((index+1) % 50 == 0){
-                seq+="<br/>"
+                free_levels = response[0][1].toString().length - (index+2).toString().length
+                seq += "<br/>" + "&nbsp;".repeat(free_levels) + (index+2) + "&nbsp;"
               }
               else if ((index+1) % 10 == 0){
                 seq+="&nbsp;"
@@ -77,6 +39,71 @@ function get_exp_data(){
                             <div class = 'row'><div class = 'col-md-3'>Phenotype value</div><div class = 'col-md-5'>"+response[0][2]+"</div></div>\
                             <div class = 'row'><div class = 'col-md-12'>"+seq+"</div></div>")
       }
+    })
+    
+    $.ajax({
+        type: "POST",
+        url: "fit_distribution/",
+        data: {'choice' : choice},
+        beforeSend: function() {
+          $('#click_stat').html('')
+          $("#plots").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
+        },
+        success: function(response){
+           $("#plots").html('');
+            x_ = []
+            y_ = []
+            wt = response[0][2]
+            $.each(response, function(index, val) {
+                x_.push(val[0])
+                y_.push(parseInt(val[1]))
+              });
+
+            var plots_dist = document.getElementById("plots"),
+            hist = [
+                {
+                  x: x_,
+                  y: y_,
+                  type: 'bar'
+                }
+              ],
+
+            layout = { 
+                title: 'Phenotype distribution',
+                height: 600,
+                font: {size: 12},
+                xaxis: {
+                  title: 'Fitness'
+                },
+                yaxis: {
+                  title: 'Genotypes count'
+                },
+                shapes: [
+                  {
+                    type: 'line',
+                    x0: wt,
+                    y0: 0,
+                    x1: wt,
+                    y1: Math.max(...y_),
+                    line: {
+                      color: 'red',
+                      width: 1
+                    }
+                  }
+                ]
+              };
+
+
+            var config = {responsive: true}
+            Plotly.newPlot('plots', hist, layout, config );
+
+            plots_dist .on('plotly_click', function(data){
+              for(var i=0; i < data.points.length; i++){
+                val = data.points[i].x
+              };
+              single_mutation_for_fitness(val)
+            })
+        }
     })
 
     $.ajax({
@@ -334,4 +361,49 @@ function load_experiments(){
             $('#experiments').html(html)
         }
       })
+}
+
+function single_mutation_for_fitness(fitness){
+  $.ajax({
+    type: "POST",
+    url: "single_mutants_fitness/",
+    data: {'choice' : choice, 'fitness':fitness},
+    beforeSend: function() {
+      $("#click_stat").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
+    },
+    success: function(response){
+        $("#click_stat").html('')
+        x_ = []
+        y_ = []
+        z_ = []
+        $.each(response, function(index, val) {
+            x_.push(val[0])
+            y_.push(val[1])
+            z_.push(val[2])
+          });
+
+          var data = [{
+            x: x_,
+            y: y_,
+            z: z_,
+            type: 'heatmap',
+            hoverongaps: false
+          }];
+          
+          var layout = {
+            title: 'Single mutations for fitness near '+fitness+' value',
+            height: 600,
+            xaxis: {
+              title: 'Position',
+              type: 'category'
+            },
+            yaxis: {
+              title: 'Amino acid',
+              categoryorder: 'category descending'
+            },
+          };
+          
+          Plotly.newPlot('click_stat', data, layout);
+    }
+  })
 }

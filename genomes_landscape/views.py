@@ -30,11 +30,14 @@ def get_fitness_distribution(request):
     conn = connect_db()
     cursor = conn.cursor()
     cursor.execute('''
-                    select round(phenotype::numeric, 1) as fitness,
-                           count(*) as cont_fitness
+                    select round(genotypes.phenotype::numeric, 1) as fitness,
+						   count(*) as cont_fitness,
+                           experiments.phenotype::numeric as phenotype_wt
                     from genotypes
-                    where exp_id = '''+exp_id+'''
-                    group by fitness
+                    left join experiments on genotypes.exp_id = experiments.exp_id
+                    where genotypes.exp_id = '''+exp_id+'''
+                    group by fitness, phenotype_wt
+                    order by fitness
                         ''')
 
     exps = cursor.fetchall()
@@ -89,6 +92,8 @@ def get_experiment_landscape(request):
 @csrf_exempt
 def single_mutants_fitness(request):
     exp_id = request.POST.get('choice')
+    fitness = request.POST.get('fitness')
+    fitness_query = "" if fitness is None else "and round(phenotype::numeric, 1) = {0}".format(fitness)
     conn = connect_db()
     cursor = conn.cursor()
     cursor.execute('''
@@ -98,10 +103,11 @@ def single_mutants_fitness(request):
                         from genotypes
                         where exp_id = '''+exp_id+'''
                         and array_length(string_to_array(genotype, ':'), 1) = 1
+                        {0}
                         group by mutation, letter
                         ORDER BY mutation
 
-                    ''')
+                    '''.format(fitness_query))
 
     exps = cursor.fetchall()
     cursor.close()
