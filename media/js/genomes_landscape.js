@@ -230,6 +230,7 @@ function get_exp_data(){
             };
             
             Plotly.newPlot('average', data, layout);
+            $("#click_stat").append("<p style = 'margin-top:250px'>&lArr; Choose fitness in penotype distribution</p>")
       }
     })
 
@@ -244,7 +245,6 @@ function get_exp_data(){
         $('#dwn_link').attr("href", textFile)
         $('#dwn_link').attr("download", "output.csv")
         $('#dwn_link').attr("target", "_blank")
-
       }
     })
 
