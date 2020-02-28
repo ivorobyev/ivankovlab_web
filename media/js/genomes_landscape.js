@@ -96,6 +96,7 @@ function get_exp_data(){
 
             var config = {responsive: true}
             Plotly.newPlot('plots', hist, layout, config );
+            $("#click_stat").append("<p style = 'margin-top:250px'>&lArr; Choose fitness in penotype distribution</p>")
 
             plots_dist .on('plotly_click', function(data){
               for(var i=0; i < data.points.length; i++){
@@ -230,7 +231,6 @@ function get_exp_data(){
             };
             
             Plotly.newPlot('average', data, layout);
-            $("#click_stat").append("<p style = 'margin-top:250px'>&lArr; Choose fitness in penotype distribution</p>")
       }
     })
 
