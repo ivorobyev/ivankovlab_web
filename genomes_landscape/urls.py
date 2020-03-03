@@ -12,5 +12,6 @@ urlpatterns = [
     path('average_fitness/', views.average_fitness, name='average_fitness'),
     path('get_mutation_distribution/', views.get_mutation_distribution, name='get_mutation_distribution'),
     path('get_experiment_summary/', views.get_experiment_summary, name='get_experiment_summary'),
+    path('mutations_violin/', views.mutations_violin, name='mutations_violin'),
     path('download_dataset/', views.download_dataset, name='download_dataset'),
 ]

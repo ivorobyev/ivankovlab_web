@@ -15,7 +15,7 @@ function get_exp_data(){
         }
         else {
           seq = "<div class = 'sequence'><p>"+"&nbsp;".repeat(response[0][1].toString().length-1) + "1&nbsp;"
-          positions = response[0][4].split(',').map(numStr => parseInt(numStr));
+          positions = response[0][5].split(',').map(numStr => parseInt(numStr));
           $.each(response[0][0].split(''), function(index, val) {
               if (positions.includes(index+1)) {
                 seq+= "<span style = 'color: red;'>"+val+"</span>"
@@ -32,10 +32,11 @@ function get_exp_data(){
                 seq+="&nbsp;"
               }
           });
-          seq+= "<br/><span style = 'font-size: 11px'>* red color means mutated positions</span></p></div>"
+          seq += "<br/><span style = 'font-size: 11px'>* red color means mutated positions</span></p></div>"
         }
 
         $("#summary").html("<div class = 'row'><div class = 'col-md-3'>Sequence length</div><div class = 'col-md-5'>"+response[0][1]+"</div></div>\
+                            <div class = 'row'><div class = 'col-md-3'>Phenotype name</div><div class = 'col-md-5'>"+response[0][3]+"</div></div>\
                             <div class = 'row'><div class = 'col-md-3'>Phenotype value</div><div class = 'col-md-5'>"+response[0][2]+"</div></div>\
                             <div class = 'row'><div class = 'col-md-12'>"+seq+"</div></div>")
       }
@@ -250,7 +251,8 @@ function get_exp_data(){
 
     $('#res').append('<div id = "extend"><h3>Extended graphs</h3></div>')
     $('#extend').append('<div class = "graph-block bt" id = "max_fitness_heatmap"><button onclick = "max_fitness_heatmap()">Max fitness heatmap</button></div>\
-                         <div class = "graph-block bt" id = "average_fitness_heatmap"><button onclick = "average_fitness_heatmap()">Average fitness heatmap</button></div>')
+                         <div class = "graph-block bt" id = "average_fitness_heatmap"><button onclick = "average_fitness_heatmap()">Average fitness heatmap</button></div>\
+                         <div class = "graph-block bt" id = "mutations_violin"><button onclick = "mutations_violin()">Mutations count violin plot</button></div>')
 }
 
 function max_fitness_heatmap(){
@@ -297,6 +299,55 @@ function max_fitness_heatmap(){
             Plotly.newPlot('max_fitness_heatmap', data, layout);
       }
     })
+}
+
+function mutations_violin(){
+  choice = $('#experiments_list').val();
+  $.ajax({
+    type: "POST",
+    url: "mutations_violin/",
+    data: {'choice' : choice},
+    beforeSend: function() {
+      $("#mutations_violin").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
+    },
+    success: function(response){
+        $("#mutations_violin").html('')
+        x_ = []
+        y_ = []
+        $.each(response, function(index, val) {
+            x_.push(val[0])
+            y_.push(val[1])
+          });
+
+          var data = [{
+            x: x_,
+            y: y_,
+            type: 'violin',
+            meanline: {
+              visible: true
+            },
+            box: {
+              visible: true
+            },
+            x0: "Phenotype"
+
+          }];
+          
+          var layout = {
+            title: 'Mutations count violin plot',
+            height: 600,
+            xaxis: {
+              title: 'Mutations count'
+            },
+            yaxis: {
+              title: 'Phenotype',
+              zeroline: false
+            },
+          };
+          
+          Plotly.newPlot('mutations_violin', data, layout);
+    }
+  })
 }
 
 function average_fitness_heatmap(){

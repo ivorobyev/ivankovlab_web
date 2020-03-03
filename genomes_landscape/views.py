@@ -199,6 +199,7 @@ def get_experiment_summary(request):
                     select genotype,
                             length(genotype),
                             phenotype,
+                            phenotype_name,
                             paper,
                             (select string_agg(pos,',')
                                 from (
@@ -209,6 +210,23 @@ def get_experiment_summary(request):
                                 )as positions) as positions
                         from experiments
                         where exp_id = '''+exp_id+'''
+                        ''')
+
+    exps = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return JsonResponse(exps, safe = False)
+
+@csrf_exempt
+def mutations_violin(request):
+    exp_id = request.POST.get('choice')
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute('''
+                    select DISTINCT array_length(string_to_array(genotype, ':'), 1) as len,
+                        phenotype
+                    from genotypes
+                    where exp_id = '''+exp_id+'''
                         ''')
 
     exps = cursor.fetchall()
