@@ -97,16 +97,33 @@ def single_mutants_fitness(request):
     conn = connect_db()
     cursor = conn.cursor()
     cursor.execute('''
-                       select substring(unnest(string_to_array(genotype, ':')) from '[0-9]+')::numeric as mutation,
-                              right(unnest(string_to_array(genotype, ':')),1) as letter,
-                              avg(phenotype) as avg_phenotype
+                        with all_letters as (
+                        select distinct substring(unnest(string_to_array(genotype, ':')) from '[0-9]+')::numeric as pos,
+                            letter
                         from genotypes
-                        where exp_id = '''+exp_id+'''
-                        and array_length(string_to_array(genotype, ':'), 1) = 1
-                        {0}
-                        group by mutation, letter
-                        ORDER BY mutation
-
+                        cross join (
+                            select unnest(array['A','R','N','D','C','E','Q','G','H','I','L','K','M','F','P','S','T','W','Y','V']) as letter
+                        ) as lt
+                        where exp_id = '''+exp_id+''' and array_length(string_to_array(genotype, ':'), 1) = 1
+                        order by pos
+                        )
+                        select pos,
+                            all_letters.letter,
+                            avg_phenotype,
+                            (select phenotype  from experiments where exp_id = '''+exp_id+''') 
+                        from all_letters 
+                        left join (
+                            select substring(unnest(string_to_array(genotype, ':')) from '[0-9]+')::numeric as mutation,
+                                                        right(unnest(string_to_array(genotype, ':')),1) as letter,
+                                                        avg(phenotype) as avg_phenotype
+                            from genotypes
+                            where exp_id = '''+exp_id+'''
+                            and array_length(string_to_array(genotype, ':'), 1) = 1
+                            {0}
+                            group by mutation, letter
+                        ) as hm
+                        on all_letters.pos = hm.mutation and all_letters.letter = hm.letter
+                        ORDER BY pos
                     '''.format(fitness_query))
 
     exps = cursor.fetchall()
@@ -126,7 +143,7 @@ def max_fitness(request):
                         from genotypes
                         where exp_id = '''+exp_id+'''
                         group by mutation, letter
-                        ORDER BY mutation
+                        order by mutation
                     ''')
 
     exps = cursor.fetchall()
@@ -141,10 +158,11 @@ def download_dataset(request):
     cursor = conn.cursor()
     cursor.execute('''
                     select genotype,
-                           phenotype,
-                           error
+                           phenotype
                     from genotypes
                     where exp_id = '''+exp_id+'''
+                    order by substring((string_to_array(genotype, ':'))[1] from '[0-9]+')::numeric,
+                            right((string_to_array(genotype, ':'))[1],1)
                         ''')
 
     exps = cursor.fetchall()
@@ -164,7 +182,7 @@ def average_fitness(request):
                         from genotypes
                         where exp_id = '''+exp_id+'''
                         group by mutation, letter
-                        ORDER BY mutation
+                        order by mutation
                     ''')
 
     exps = cursor.fetchall()

@@ -1,13 +1,55 @@
+function get_colorscale(min, max, wt){
+          function change_color(color, steps){
+            $.each(color, function(index, val) {
+              color[index] = steps[index] + color[index]
+            });
+            return color;
+          }
+
+          to_mid = Math.abs(wt - min)
+          amplitude = Math.abs(max - min)
+          mid_percent = parseFloat((to_mid/amplitude).toFixed(2))
+          rate = mid_percent*100
+
+          blue = [0,0,255]
+          grey = [220,220,220]
+          red = [255,0,0]
+          
+          blue_grey_steps = blue.map(function(x) {return Math.floor((220 - x)/rate)})
+
+          var scale = []
+
+          for (var i = 0; i <= mid_percent; i+=0.01) {
+            blue_fake = blue.map(function(x) {return Math.ceil(x)})
+            scale.push([parseFloat(i.toFixed(2)), 'rgb(' + blue_fake.join(', ') + ')']);
+            scale.push([parseFloat((i+0.01).toFixed(2)), 'rgb(' + blue_fake.join(', ') + ')']);
+            blue = change_color(blue, blue_grey_steps)
+          }
+
+          grey_red_steps = red.map(function(x) {return Math.floor((x-220)/(100-rate))})
+          grey = change_color(grey, grey_red_steps)
+
+          for (var i = mid_percent; i < 1; i+=0.01) {
+            grey_fake = grey.map(function(x) {return Math.ceil(x)})
+            scale.push([parseFloat(i.toFixed(2)), 'rgb(' + grey_fake.join(', ') + ')']);
+            scale.push([parseFloat((i+0.01).toFixed(2)), 'rgb(' + grey_fake.join(', ') + ')']);
+            grey = change_color(grey, grey_red_steps)
+          }
+
+          return scale;
+}
+
 function get_exp_data(){
     choice = $('#experiments_list').val();
     $('#extend').remove()
+    $("#loading").css("display", "block");
 
-    $.ajax({
+    var ex_summary = $.ajax({
       type: "POST",
       url: "get_experiment_summary/",
       data: {'choice' : choice},
       beforeSend: function() {
-        $("#summary").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
+        $("summary").html("")
       },
       success: function(response){
         if (response[0][0] == null){
@@ -42,16 +84,16 @@ function get_exp_data(){
       }
     })
     
-    $.ajax({
+    var fit_distribution =  $.ajax({
         type: "POST",
         url: "fit_distribution/",
         data: {'choice' : choice},
         beforeSend: function() {
-          $('#click_stat').html('')
-          $("#plots").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
+          $("#plots").html("");
         },
         success: function(response){
            $("#plots").html('');
+           $('#click_stat').html("")
             x_ = []
             y_ = []
             wt = response[0][2]
@@ -92,8 +134,7 @@ function get_exp_data(){
                     }
                   }
                 ]
-              };
-
+              }
 
             var config = {responsive: true}
             Plotly.newPlot('plots', hist, layout, config );
@@ -108,12 +149,12 @@ function get_exp_data(){
         }
     })
 
-    $.ajax({
+    var get_mutation_distribution =  $.ajax({
       type: "POST",
       url: "get_mutation_distribution/",
       data: {'choice' : choice},
       beforeSend: function() {
-        $("#mutations").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
+        $("#mutation").html("")
       },
       success: function(response){
          $("#mutations").html('');
@@ -147,15 +188,14 @@ function get_exp_data(){
       }
     })
 
-    $.ajax({
+    var get_experiment_landscape = $.ajax({
       type: "POST",
       url: "get_experiment_landscape/",
       data: {'choice' : choice},
       beforeSend: function() {
-        $("#landscape").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
+        $("#landscape").html("")
       },
       success: function(response){
-          $("#landscape").html('')
           x_ = []
           y_ = []
           z_ = []
@@ -192,15 +232,14 @@ function get_exp_data(){
       }
     })
 
-    $.ajax({
+    var single_mutants_fitness = $.ajax({
       type: "POST",
       url: "single_mutants_fitness/",
       data: {'choice' : choice},
       beforeSend: function() {
-        $("#average").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
+        $("#average").html("")
       },
       success: function(response){
-          $("#average").html('')
           x_ = []
           y_ = []
           z_ = []
@@ -208,34 +247,40 @@ function get_exp_data(){
               x_.push(val[0])
               y_.push(val[1])
               z_.push(val[2])
-            });
-
-            var data = [{
+          });
+          
+          var data = [{
               x: x_,
               y: y_,
               z: z_,
+              colorscale: get_colorscale(Math.min(...z_), Math.max(...z_), response[0][3]),
               type: 'heatmap',
               hoverongaps: false
-            }];
+          }];
             
-            var layout = {
+          var layout = {
               title: 'Single mutations fitness',
               height: 600,
               xaxis: {
                 title: 'Position',
-                type: 'category'
+                showgrid: false
               },
               yaxis: {
                 title: 'Amino acid',
-                categoryorder: 'category descending'
+                categoryorder: 'category descending',
+                showgrid: false
               },
-            };
-            
-            Plotly.newPlot('average', data, layout);
+          };
+          var config = {responsive: true}  
+          Plotly.newPlot('average', data, layout, config);
+      },
+      error: function(response){
+        $("#average").html('<p>Error</p>')
+        return 0;
       }
     })
 
-    $.ajax({
+    var download_dataset = $.ajax({
       type: "POST",
       url: "download_dataset/",
       data: {'choice' : choice},
@@ -247,6 +292,10 @@ function get_exp_data(){
         $('#dwn_link').attr("download", "output.csv")
         $('#dwn_link').attr("target", "_blank")
       }
+    })
+
+    $.when(ex_summary, fit_distribution, get_mutation_distribution, get_experiment_landscape, single_mutants_fitness, download_dataset).then(function(){
+      $("#loading").css("display", "none");
     })
 
     $('#res').append('<div id = "extend"><h3>Extended graphs</h3></div>')
@@ -263,7 +312,7 @@ function max_fitness_heatmap(){
       url: "max_fitness/",
       data: {'choice' : choice},
       beforeSend: function() {
-        $("#max_fitness_heatmap").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
+        $("#max_fitness_heatmap").html("<p>...</p>");
       },
       success: function(response){
           $("#max_fitness_heatmap").html('')
@@ -288,11 +337,13 @@ function max_fitness_heatmap(){
               height: 600,
               xaxis: {
                 title: 'Position',
-                type: 'category'
+                type: 'category',
+                showgrid: false
               },
               yaxis: {
                 title: 'Amino acid',
-                categoryorder: 'category descending'
+                categoryorder: 'category descending',
+                showgrid: false
               },
             };
             
@@ -308,7 +359,7 @@ function mutations_violin(){
     url: "mutations_violin/",
     data: {'choice' : choice},
     beforeSend: function() {
-      $("#mutations_violin").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
+      $("#mutations_violin").html("<p>...</p>");
     },
     success: function(response){
         $("#mutations_violin").html('')
@@ -357,7 +408,7 @@ function average_fitness_heatmap(){
     url: "average_fitness/",
     data: {'choice' : choice},
     beforeSend: function() {
-      $("#average_fitness_heatmap").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
+      $("#average_fitness_heatmap").html("<p>...</p>");
     },
     success: function(response){
         $("#average_fitness_heatmap").html('')
@@ -400,12 +451,12 @@ function load_experiments(){
         type: "POST",
         url: "exp_list/",
         beforeSend: function() {
-          $("#experiments").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
+          $("#experiments").html("<p>...</p>");
         },
         success: function(response){
             html = '<select class = "form-control" id = "experiments_list" onchange = "get_exp_data()">'
             html += '<option disabled selected value> -- select an option -- </option>'
-            $.each(response, function(index, val) {
+            $.each(response, function(index, val) {98
                 html += '<option value = '+val[0]+'>'+val[1]+' </option>'
               });
             html += '</select>'
@@ -420,7 +471,7 @@ function single_mutation_for_fitness(fitness){
     url: "single_mutants_fitness/",
     data: {'choice' : choice, 'fitness':fitness},
     beforeSend: function() {
-      $("#click_stat").html("<img style = 'margin: 50px 0 50px 0' src = '/media/images/loader.gif'/>");
+      $("#click_stat").html("<p style = 'margin-top: 50px'>Please wait</p>");
     },
     success: function(response){
         $("#click_stat").html('')
@@ -446,15 +497,20 @@ function single_mutation_for_fitness(fitness){
             height: 600,
             xaxis: {
               title: 'Position',
-              type: 'category'
+              type: 'category',
+              showgrid: false
             },
             yaxis: {
               title: 'Amino acid',
-              categoryorder: 'category descending'
+              categoryorder: 'category descending',
+              showgrid: false
             },
           };
-          
           Plotly.newPlot('click_stat', data, layout);
-    }
+    },
+  error: function(response){
+          $("#click_stat").html('<p>Error</p>')
+  }
+  
   })
 }
