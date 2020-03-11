@@ -39,8 +39,8 @@ function get_colorscale(min, max, wt){
           return scale;
 }
 
-function get_exp_data(){
-    choice = $('#experiments_list').val();
+function get_exp_data(cls){
+    choice = $(cls).val();
     $('#extend').remove()
     $("#loading").css("display", "block");
 
@@ -263,6 +263,7 @@ function get_exp_data(){
               height: 600,
               xaxis: {
                 title: 'Position',
+                type: 'category',
                 showgrid: false
               },
               yaxis: {
@@ -454,12 +455,29 @@ function load_experiments(){
           $("#experiments").html("<p>...</p>");
         },
         success: function(response){
-            html = '<select class = "form-control" id = "experiments_list" onchange = "get_exp_data()">'
-            html += '<option disabled selected value> -- select an option -- </option>'
-            $.each(response, function(index, val) {98
-                html += '<option value = '+val[0]+'>'+val[1]+' </option>'
+            html = '<div class="accordion" id="accordionExample">'
+            $.each(response, function(index, val) {
+                html += `<div class="card">
+                        <div class="card-header" id="headingOne">
+                          <h5 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse`+index+`" aria-expanded="true" aria-controls="collapseOne">
+                              `+index+`
+                            </button>
+                          </h5>
+                        </div>
+                        <div id="collapse`+index+`" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                         <div class="card-body">
+                         <select class = "form-control" id = '`+index+`' onchange = "get_exp_data('#`+index+`')">
+                         <option disabled selected value> -- select an option -- </option>`
+                $.each(val, function( index, value ) {
+                   html += '<option value = '+value[0]+'>'+value[1]+' </option>'
+                });
+                html += `</select>
+                        </div>
+                        </div>
+                      </div>` 
               });
-            html += '</select>'
+            html += '</div>'
             $('#experiments').html(html)
         }
       })

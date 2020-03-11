@@ -2,6 +2,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 import psycopg2
 from django.views.decorators.csrf import csrf_exempt
+from collections import defaultdict
 
 def g_index(request):    
     return render(request, "gl.html",{})
@@ -15,13 +16,17 @@ def get_experiments(resp):
 
     cursor = conn.cursor()
     cursor.execute('''
-                    SELECT exp_id, exp_name FROM experiments
+                    SELECT exp_id, exp_name, parent_name FROM experiments
                     ''')
 
     exps = cursor.fetchall()
+    exps_dict  = defaultdict(list)
+    for ex in exps:
+        exps_dict[ex[2]].append((ex[0], ex[1]))
+
     cursor.close()
     conn.close()
-    return JsonResponse(exps, safe = False)
+    return JsonResponse(exps_dict, safe = False)
 
 @csrf_exempt
 def get_fitness_distribution(request):
@@ -38,7 +43,7 @@ def get_fitness_distribution(request):
                     where genotypes.exp_id = '''+exp_id+'''
                     group by fitness, phenotype_wt
                     order by fitness
-                        ''')
+                    ''')
 
     exps = cursor.fetchall()
     cursor.close()
