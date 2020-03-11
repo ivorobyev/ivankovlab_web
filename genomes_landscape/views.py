@@ -16,8 +16,8 @@ def get_experiments(resp):
 
     cursor = conn.cursor()
     cursor.execute('''
-                    SELECT exp_id, exp_name, parent_name FROM experiments ORDER BY parent_name, exp_name
-                    ''')
+                   SELECT exp_id, exp_name, parent_name FROM experiments ORDER BY parent_name, exp_name
+                   ''')
 
     exps = cursor.fetchall()
     exps_dict  = defaultdict(list)

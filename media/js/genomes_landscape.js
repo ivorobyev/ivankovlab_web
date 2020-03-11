@@ -39,10 +39,10 @@ function get_colorscale(min, max, wt){
           return scale;
 }
 
-function get_exp_data(cls){
-    choice = $(cls).val();
+function get_exp_data(choice){
     $('#extend').remove()
     $("#loading").css("display", "block");
+    $('.collapse').collapse('hide')
 
     var ex_summary = $.ajax({
       type: "POST",
@@ -464,10 +464,9 @@ function load_experiments(){
                         </div>
                         <div id="collapse`+index+`" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                          <div class="card-body">
-                         <select class = "form-control" id = '`+index+`' onchange = "get_exp_data('#`+index+`')">
-                         <option disabled selected value> -- select an option -- </option>`
+                         `
                 $.each(val, function( index, value ) {
-                   html += '<option value = '+value[0]+'>'+value[1]+' </option>'
+                   html += '<button onclick = get_exp_data('+value[0]+')>'+value[1]+' </option>'
                 });
                 html += `</select>
                         </div>

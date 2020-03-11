@@ -616,6 +616,16 @@ figure.effect-bubba:hover p {
     padding-top:10px;
     padding-bottom: 10px;
 }
+.card-body button{
+    background-color: transparent;
+    border: none;
+    margin-top: 5px;
+}
+
+.card-body button:hover{
+    border: 1px solid;
+    border-radius: 3px;;
+}
 
 /*--------------------
 4.6. Team
