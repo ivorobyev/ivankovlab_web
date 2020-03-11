@@ -300,13 +300,12 @@ function get_exp_data(cls){
     })
 
     $('#res').append('<div id = "extend"><h3>Extended graphs</h3></div>')
-    $('#extend').append('<div class = "graph-block bt" id = "max_fitness_heatmap"><button onclick = "max_fitness_heatmap()">Max fitness heatmap</button></div>\
-                         <div class = "graph-block bt" id = "average_fitness_heatmap"><button onclick = "average_fitness_heatmap()">Average fitness heatmap</button></div>\
-                         <div class = "graph-block bt" id = "mutations_violin"><button onclick = "mutations_violin()">Mutations count violin plot</button></div>')
+    $('#extend').append('<div class = "graph-block bt" id = "max_fitness_heatmap"><button onclick = "max_fitness_heatmap('+choice+')">Max fitness heatmap</button></div>\
+                         <div class = "graph-block bt" id = "average_fitness_heatmap"><button onclick = "average_fitness_heatmap('+choice+')">Average fitness heatmap</button></div>\
+                         <div class = "graph-block bt" id = "mutations_violin"><button onclick = "mutations_violin('+choice+')">Mutations count violin plot</button></div>')
 }
 
-function max_fitness_heatmap(){
-    choice = $('#experiments_list').val();
+function max_fitness_heatmap(choice){
     $('#max_fitness_heatmap').html()
     $.ajax({
       type: "POST",
@@ -353,8 +352,7 @@ function max_fitness_heatmap(){
     })
 }
 
-function mutations_violin(){
-  choice = $('#experiments_list').val();
+function mutations_violin(choice){
   $.ajax({
     type: "POST",
     url: "mutations_violin/",
@@ -402,8 +400,7 @@ function mutations_violin(){
   })
 }
 
-function average_fitness_heatmap(){
-  choice = $('#experiments_list').val();
+function average_fitness_heatmap(choice){
   $.ajax({
     type: "POST",
     url: "average_fitness/",
