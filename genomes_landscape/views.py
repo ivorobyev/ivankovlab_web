@@ -35,13 +35,11 @@ def get_fitness_distribution(request):
     conn = connect_db()
     cursor = conn.cursor()
     cursor.execute('''
-                    select round(genotypes.phenotype::numeric, 1) as fitness,
-						   count(*) as cont_fitness,
-                           experiments.phenotype::numeric as phenotype_wt
-                    from genotypes
-                    left join experiments on genotypes.exp_id = experiments.exp_id
-                    where genotypes.exp_id = '''+exp_id+'''
-                    group by fitness, phenotype_wt
+                    select fitness,
+						   cont_fitness,
+                           phenotype_wt
+                    from fitness_distribution
+                    where exp_id_ = '''+exp_id+'''
                     order by fitness
                     ''')
 
@@ -79,14 +77,9 @@ def get_experiment_landscape(request):
                         cont_fitness
                     from points
                     left join (
-                    select substring(unnest(string_to_array(genotype, ':')) from '[0-9]+')::numeric as mutation,
-                        round(phenotype::numeric, 1) as fitness,
-                        count(*) as cont_fitness
-                    from genotypes
-                    where exp_id = '''+exp_id+'''
-                    group by mutation, fitness
-                    ) as genotype 
-                    on points.pos = genotype.mutation and points.fit = genotype.fitness
+                        SELECT * FROM landscapes WHERE exp_id = '''+exp_id+'''
+                    ) AS landscapes
+                    on points.pos = landscapes.mutation and points.fit = landscapes.fitness
                     ''')
 
     exps = cursor.fetchall()
@@ -201,11 +194,10 @@ def get_mutation_distribution(request):
     conn = connect_db()
     cursor = conn.cursor()
     cursor.execute('''
-                    select coalesce(array_length(string_to_array(genotype, ':'), 1), 0) as mutations_count,
-                           count(distinct genotypes) as number_of_mutations
-                    from genotypes
+                    select mutations_count,
+                           number_of_mutations
+                    from mutation_distribution
                     where exp_id = '''+exp_id+'''
-                    group by mutations_count
                         ''')
 
     exps = cursor.fetchall()
@@ -224,15 +216,9 @@ def get_experiment_summary(request):
                             phenotype,
                             phenotype_name,
                             paper,
-                            (select string_agg(pos,',')
-                                from (
-                                    select distinct substring(unnest(string_to_array(genotype, ':')) from '[0-9]+') as pos
-                                    from genotypes
-                                    where exp_id = '''+exp_id+'''
-                                    order by pos
-                                )as positions) as positions
-                        from experiments
-                        where exp_id = '''+exp_id+'''
+                            pss
+                        from experiments_summary
+                        where exp_id_ = '''+exp_id+'''
                         ''')
 
     exps = cursor.fetchall()

@@ -620,6 +620,7 @@ figure.effect-bubba:hover p {
     background-color: transparent;
     border: none;
     margin-top: 5px;
+    margin-bottom:5px;
 }
 
 .card-body button:hover{

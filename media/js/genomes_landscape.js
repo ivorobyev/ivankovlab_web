@@ -144,7 +144,7 @@ function get_exp_data(choice){
               for(var i=0; i < data.points.length; i++){
                 val = data.points[i].x
               };
-              single_mutation_for_fitness(val)
+              single_mutation_for_fitness(val, choice)
             })
         }
     })
@@ -465,7 +465,7 @@ function load_experiments(){
                         <div id="collapse`+index+`" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                          <div class="card-body">
                          `
-                $.each(val, function( index, value ) {
+                $.each(val, function(index, value) {
                    html += '<button onclick = get_exp_data('+value[0]+')>'+value[1]+' </option>'
                 });
                 html += `</select>
@@ -479,7 +479,7 @@ function load_experiments(){
       })
 }
 
-function single_mutation_for_fitness(fitness){
+function single_mutation_for_fitness(fitness, choice){
   $.ajax({
     type: "POST",
     url: "single_mutants_fitness/",
