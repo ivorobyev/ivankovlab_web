@@ -466,7 +466,7 @@ function load_experiments(){
                          <div class="card-body">
                          `
                 $.each(val, function(index, value) {
-                   html += '<button onclick = get_exp_data('+value[0]+')>'+value[1]+' </option>'
+                   html += `<a href = 'inner?prot=`+value[0]+`' target = '_blank'> `+value[1]+`</a></br></option>`
                 });
                 html += `</select>
                         </div>
