@@ -7,6 +7,9 @@ from collections import defaultdict
 def g_index(request):    
     return render(request, "gl.html",{})
 
+def g_inner(request):    
+    return render(request, "gl_inner.html",{})
+
 def connect_db():
     return psycopg2.connect("dbname='experiments' user='postgreadmin' host='89.223.29.224' port = 5432 password='ivankovlabdb355113'")
 
