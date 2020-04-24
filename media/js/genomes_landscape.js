@@ -452,28 +452,26 @@ function load_experiments(){
           $("#experiments").html("<p>...</p>");
         },
         success: function(response){
-            html = '<div class="accordion" id="accordionExample">'
+            console.log(response)
+            html = '<table class = "table">'
             $.each(response, function(index, val) {
-                html += `<div class="card">
-                        <div class="card-header" id="headingOne">
-                          <h5 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse`+index+`" aria-expanded="true" aria-controls="collapseOne">
-                              `+index+`
-                            </button>
-                          </h5>
-                        </div>
-                        <div id="collapse`+index+`" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                         <div class="card-body">
-                         `
+
+              html += `<tr>
+                      <td>
+                            <p><a href = `+val[0][8]+` target = '_blank'>`+val[0][3]+` `+val[0][2]+` `+val[0][4]+` `+ val[0][5]+` `+val[0][6]+` `+val[0][7]+`</a></p>
+                            <p>PMID: <a href = 'https://www.ncbi.nlm.nih.gov/pubmed/`+ val[0][9]+`' target = '_blank'>`+val[0][9]+`</a></p>
+                            <p>`+val[0][11]+`</p>
+                            <p>Taxon id: <a href = 'https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=`+val[0][12]+`' target = '_blank'>`+val[0][12]+`</a></p>
+                        </td>
+                        <td>
+                        `
+
                 $.each(val, function(index, value) {
-                   html += `<a href = 'inner?prot=`+value[0]+`' target = '_blank'> `+value[1]+`</a></br></option>`
+                  html += `<p><a href = 'inner?prot=`+value[0]+`' target = '_blank'> `+value[10]+`</a></p>`
                 });
-                html += `</select>
-                        </div>
-                        </div>
-                      </div>` 
+                html += `</td></tr>` 
               });
-            html += '</div>'
+            html += '</table>'
             $('#experiments').html(html)
         }
       })

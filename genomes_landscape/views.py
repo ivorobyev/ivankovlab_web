@@ -19,13 +19,30 @@ def get_experiments(resp):
 
     cursor = conn.cursor()
     cursor.execute('''
-                   SELECT exp_id, exp_name, parent_name FROM experiments ORDER BY parent_name, exp_name
+                   SELECT exp_id, 
+                          exp_name, 
+                          parent_name,
+                          title,
+                          authors,
+                          year,
+                          journal,
+                          volume,
+                          pages,
+                          doi,
+                          pmid,
+                          name,
+                          full_name,
+                          tax_id                
+                   FROM experiments ORDER BY parent_name, exp_name
                    ''')
 
     exps = cursor.fetchall()
     exps_dict  = defaultdict(list)
     for ex in exps:
-        exps_dict[ex[2]].append((ex[0], ex[1]))
+        exps_dict[ex[2]].append((ex[0], ex[1], ex[3], 
+                                 ex[4], ex[5], ex[6], 
+                                 ex[7], ex[8], ex[9], 
+                                 ex[10], ex[11], ex[12], ex[13]))
 
     cursor.close()
     conn.close()
@@ -60,7 +77,7 @@ def get_experiment_landscape(request):
     cursor.execute('''
                     with points as (
                         select pos,
-                            fit
+                               fit
                         from (
                             select generate_series(min(pos::numeric), max(pos::numeric)) as pos
                             from (
