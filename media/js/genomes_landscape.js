@@ -81,7 +81,24 @@ function get_exp_data(choice){
                             <div class = 'row'><div class = 'col-md-3'>Phenotype name</div><div class = 'col-md-5'>"+response[0][3]+"</div></div>\
                             <div class = 'row'><div class = 'col-md-3'>Phenotype value</div><div class = 'col-md-5'>"+response[0][2]+"</div></div>\
                             <div class = 'row'><div class = 'col-md-12'>"+seq+"</div></div>")
+
+        pdb_id = response[0][6].slice(0, response[0][6].length - 2)
+
+        var plugin = LiteMol.Plugin.create({target: '#structure',
+                                            layoutState: {
+                                              hideControls: true
+                                            },
+                                            });
+
+        plugin.loadMolecule({
+          id: '1tqn',
+          url: 'https://www.ebi.ac.uk/pdbe/entry-files/download/pdb'+pdb_id.toLowerCase()+'.ent',
+          format: 'pdb'
+        });
       }
+
+
+
     })
     
     var fit_distribution =  $.ajax({

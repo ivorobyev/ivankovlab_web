@@ -4,7 +4,8 @@
     <head>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-158675469-1"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-158675469-1"></script>
+	<script src="/media/dist/js/LiteMol-plugin.js"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -12,7 +13,6 @@
 
     gtag('config', 'UA-158675469-1');
     </script>
-
         <title>Genome landscape</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,7 +24,9 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link href="/media/css/style.css" rel="stylesheet">
 	<link href="/media/css/sequence_number.css" rel="stylesheet">
+	<link rel="stylesheet" href="/media/dist/css/LiteMol-plugin.css">
 	<link rel="prefetch" href='/media/images/loader.gif'>
+
 	{% render_block "css" %}
     </head>
 	<body onload = "load_experiments()">
@@ -51,6 +53,10 @@
 								<div class = "col-md-6">
 									<div id = "summary"></div>
 								</div>
+								<div class = "col-md-6">
+									<div id = "structure" style="width: 640px; height: 480px; position: relative"></div>
+								</div>
+							
 								<div class = "col-md-6">
 									<div id = "mutations"></div>
 								</div>
@@ -87,6 +93,7 @@
     <script src="/media/js/genomes_landscape.js"></script>
 	<script src="/media/js/excellentexport.min.js"></script>
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script src="/media/js/litemol.js"></script>
 	<script type="text/javascript">
 		if (document.images) {
 			img1 = new Image();

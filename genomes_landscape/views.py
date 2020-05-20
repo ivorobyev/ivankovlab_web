@@ -92,14 +92,14 @@ def get_experiment_landscape(request):
                             where exp_id = '''+exp_id+'''
                         ) as all_fit
                     )
-                    select pos,
+                    select points.pos,
                         fit,
                         cont_fitness
                     from points
                     left join (
                         SELECT * FROM landscapes WHERE exp_id = '''+exp_id+'''
                     ) AS landscapes
-                    on points.pos = landscapes.mutation and points.fit = landscapes.fitness
+                    on points.pos = landscapes.pos and points.fit = landscapes.fitness
                     ''')
 
     exps = cursor.fetchall()
@@ -231,12 +231,13 @@ def get_experiment_summary(request):
     conn = connect_db()
     cursor = conn.cursor()
     cursor.execute('''
-                    select genotype,
-                            length(genotype),
+                        select genotype,
+                            len,
                             phenotype,
                             phenotype_name,
                             paper,
-                            pss
+                            pss,
+                            pdb
                         from experiments_summary
                         where exp_id_ = '''+exp_id+'''
                         ''')
