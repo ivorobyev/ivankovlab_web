@@ -32,7 +32,8 @@ def get_experiments(resp):
                           pmid,
                           name,
                           full_name,
-                          tax_id                
+                          tax_id,
+                          organism                
                    FROM experiments ORDER BY parent_name, exp_name
                    ''')
 
@@ -42,7 +43,7 @@ def get_experiments(resp):
         exps_dict[ex[2]].append((ex[0], ex[1], ex[3], 
                                  ex[4], ex[5], ex[6], 
                                  ex[7], ex[8], ex[9], 
-                                 ex[10], ex[11], ex[12], ex[13]))
+                                 ex[10], ex[11], ex[12], ex[13], ex[14]))
 
     cursor.close()
     conn.close()
@@ -237,7 +238,8 @@ def get_experiment_summary(request):
                             phenotype_name,
                             paper,
                             pss,
-                            pdb
+                            pdb,
+                            full_name
                         from experiments_summary
                         where exp_id_ = '''+exp_id+'''
                         ''')

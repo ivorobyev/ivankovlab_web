@@ -74,15 +74,17 @@ function get_exp_data(choice){
                 seq+="&nbsp;"
               }
           });
-          seq += "<br/><span style = 'font-size: 11px'>* red color means mutated positions</span></p></div>"
+          seq += "<br/><span style = 'font-size: 11px; color: red'>* red color means mutated positions</span></p></div>"
         }
-
+        
+        phenotype_name = response[0][3] == null ? "&mdash;;" : response[0][3];
         $("#summary").html("<div class = 'row'><div class = 'col-md-3'>Sequence length</div><div class = 'col-md-5'>"+response[0][1]+"</div></div>\
-                            <div class = 'row'><div class = 'col-md-3'>Phenotype name</div><div class = 'col-md-5'>"+response[0][3]+"</div></div>\
+                            <div class = 'row'><div class = 'col-md-3'>Phenotype name</div><div class = 'col-md-5'>"+phenotype_name+"</div></div>\
                             <div class = 'row'><div class = 'col-md-3'>Phenotype value</div><div class = 'col-md-5'>"+response[0][2]+"</div></div>\
                             <div class = 'row'><div class = 'col-md-12'>"+seq+"</div></div>")
 
         pdb_id = response[0][6].slice(0, response[0][6].length - 2)
+        $("#page-title").html(response[0][7])
 
         var plugin = LiteMol.Plugin.create({target: '#structure',
                                             layoutState: {
@@ -96,9 +98,6 @@ function get_exp_data(choice){
           format: 'pdb'
         });
       }
-
-
-
     })
     
     var fit_distribution =  $.ajax({
@@ -186,7 +185,10 @@ function get_exp_data(choice){
               {
                 x: x_,
                 y: y_,
-                type: 'bar'
+                type: 'bar',
+                text: y_.map(String),
+                textposition: 'auto',
+                hoverinfo: 'none',
               }
             ];
 
@@ -475,13 +477,15 @@ function load_experiments(){
 
               html += `<tr>
                       <td>
-                            <p><a href = `+val[0][8]+` target = '_blank'>`+val[0][3]+` `+val[0][2]+` `+val[0][4]+` `+ val[0][5]+` `+val[0][6]+` `+val[0][7]+`</a></p>
+                            <p><a href = `+val[0][8]+` target = '_blank'>`+val[0][3]+`.</br> `+val[0][2]+` `+val[0][4]+` `+ val[0][5]+` `+val[0][6]+` `+val[0][7]+`</a></p>
                             <p>PMID: <a href = 'https://www.ncbi.nlm.nih.gov/pubmed/`+ val[0][9]+`' target = '_blank'>`+val[0][9]+`</a></p>
                             <p>`+val[0][11]+`</p>
-                            <p>Taxon id: <a href = 'https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=`+val[0][12]+`' target = '_blank'>`+val[0][12]+`</a></p>
-                        </td>
-                        <td>
-                        `
+                      </td>
+                      <td>
+                            <p>`+val[0][13]+`: <a href = 'https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=`+val[0][12]+`' target = '_blank'>`+val[0][12]+`</a></p>
+                      </td>
+                      <td>
+                      `
 
                 $.each(val, function(index, value) {
                   html += `<p><a href = 'inner?prot=`+value[0]+`' target = '_blank'> `+value[10]+`</a></p>`
