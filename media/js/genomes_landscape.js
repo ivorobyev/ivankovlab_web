@@ -77,7 +77,7 @@ function get_exp_data(choice){
           seq += "<br/><span style = 'font-size: 11px; color: red'>* red color means mutated positions</span></p></div>"
         }
         
-        phenotype_name = response[0][3] == null ? "&mdash;;" : response[0][3];
+        phenotype_name = response[0][3] == null ? "&mdash;" : response[0][3];
         $("#summary").html("<div class = 'row'><div class = 'col-md-3'>Sequence length</div><div class = 'col-md-5'>"+response[0][1]+"</div></div>\
                             <div class = 'row'><div class = 'col-md-3'>Phenotype name</div><div class = 'col-md-5'>"+phenotype_name+"</div></div>\
                             <div class = 'row'><div class = 'col-md-3'>Phenotype value</div><div class = 'col-md-5'>"+response[0][2]+"</div></div>\
@@ -87,6 +87,7 @@ function get_exp_data(choice){
         $("#page-title").html(response[0][7])
 
         var plugin = LiteMol.Plugin.create({target: '#structure',
+                                            viewportBackground: '#fff',
                                             layoutState: {
                                               hideControls: true
                                             },

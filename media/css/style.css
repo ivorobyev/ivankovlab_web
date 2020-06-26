@@ -167,6 +167,8 @@ section {
 }
 .graph-block{
     border-bottom: 1px solid #9C9C9C;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 .bt button{
     background: none;
@@ -885,4 +887,10 @@ and (max-width : 480px) {
     margin-top: 7px;
     font-size: 20px;
 }
+}
+.container{
+    width: 1570px !important;
+}
+#mutations, #plots, #landscape{
+    height:600px;
 }
