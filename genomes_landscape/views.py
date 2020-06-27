@@ -11,7 +11,7 @@ def g_inner(request):
     return render(request, "gl_inner.html",{})
 
 def connect_db():
-    return psycopg2.connect("dbname='experiments' user='postgreadmin' host='89.223.29.224' port = 5432 password='ivankovlabdb355113'")
+    return psycopg2.connect("dbname='experiments' user='postgreadmin' host='89.223.29.224' port = 5432 password='iliamilton355113'")
 
 @csrf_exempt
 def get_experiments(resp):

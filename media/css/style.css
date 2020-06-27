@@ -894,3 +894,6 @@ and (max-width : 480px) {
 #mutations, #plots, #landscape{
     height:600px;
 }
+th input{
+    width: 80%;
+}
