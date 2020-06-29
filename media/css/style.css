@@ -182,7 +182,7 @@ section {
 }
 
 td p{
-    font-size: 21px !important;
+    font-size: 19px !important;
 }
 
 
@@ -896,4 +896,8 @@ and (max-width : 480px) {
 }
 th input{
     width: 80%;
+}
+
+#summary .row{
+    margin-bottom: 3px;
 }

@@ -79,8 +79,13 @@ function get_exp_data(choice){
         
         phenotype_name = response[0][3] == null ? "&mdash;" : response[0][3];
         $("#summary").html("<div class = 'row'><div class = 'col-md-3'>Sequence length</div><div class = 'col-md-5'>"+response[0][1]+"</div></div>\
-                            <div class = 'row'><div class = 'col-md-3'>Phenotype name</div><div class = 'col-md-5'>"+phenotype_name+"</div></div>\
-                            <div class = 'row'><div class = 'col-md-3'>Phenotype value</div><div class = 'col-md-5'>"+response[0][2]+"</div></div>\
+                            <div class = 'row'><div class = 'col-md-3'>Phenotye name</div><div class = 'col-md-5'>"+phenotype_name+"</div></div>\
+                            <div class = 'row'><div class = 'col-md-3'>Wild-type phenotype level</div><div class = 'col-md-5'>"+response[0][2]+"</div></div>\
+                            <div class = 'row'><div class = 'col-md-3'>Full name</div> <div class = 'col-md-5'>"+response[0][7]+"</div></div>\
+                            <div class = 'row'><div class = 'col-md-3'>Taxon ID</div> <div class = 'col-md-5'><a href = https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id="+response[0][8]+" target = '_blank'>"+response[0][8]+"</a></div></div>\
+                            <div class = 'row'><div class = 'col-md-3'>Year</div> <div class = 'col-md-5'>"+response[0][9]+"</div></div>\
+                            <div class = 'row'><div class = 'col-md-3'>Publication</div> <div class = 'col-md-5'>"+response[0][10]+"</div></div>\
+                            <div class = 'row'><div class = 'col-md-3'>Uniprot</div> <div class = 'col-md-5'><a href = https://www.uniprot.org/uniprot/"+response[0][11]+" target = '_blank'>"+response[0][11]+"</a></div></div>\
                             <div class = 'row'><div class = 'col-md-12'>"+seq+"</div></div>")
 
         pdb_id = response[0][6].slice(0, response[0][6].length - 2)
@@ -129,14 +134,17 @@ function get_exp_data(choice){
               ],
 
             layout = { 
-                title: 'Phenotype distribution',
-                height: 600,
+                title: "<b>Phenotype distribution</b> <br> The distribution of phenotype effects across all studied genotypes.<br> Red line shows wild-type phenotype.",
+                height: 570,
                 font: {size: 12},
                 xaxis: {
                   title: 'Fitness'
                 },
                 yaxis: {
                   title: 'Genotypes count'
+                },
+                margin: {
+                  t: 150
                 },
                 shapes: [
                   {
@@ -194,7 +202,8 @@ function get_exp_data(choice){
             ];
 
           var layout = { 
-              title: 'Mutations count distribution',
+              title: '<b>Mutations count distribution</b> <br> The distribution of the number<br> of introduced amino acid mutations across all studied genotypes',
+              height: 570,
               font: {size: 12},
               xaxis: {
                 title: 'Mutations count'
@@ -202,6 +211,9 @@ function get_exp_data(choice){
               yaxis: {
                 title: 'Genotypes count'
               },
+              margin: {
+                t: 150
+              }
             };
           var config = {responsive: true}
           Plotly.newPlot('mutations', hist, layout, config );
@@ -237,14 +249,17 @@ function get_exp_data(choice){
             ];
 
           var layout = { 
-              title: 'Landscape',
-              height: 600,
+              title: "<b>Landscape</b> <br> Position-specific distribution of phenotype effects. <br>For each protein position all genotypes with a mutation in this position were grouped.<br> The distribution of phenotypes across them is shown.<br>",
+              height: 570,
               scene: {
                 xaxis:{title: 'Position'},
                 yaxis:{title: 'Fitness'},
                 zaxis:{title: 'Genotypes count'},
                 },
-              font: {size: 12}
+                margin: {
+                  t: 150
+                },
+              font: {size: 12},
             };
 
           var config = {responsive: true}  
@@ -291,6 +306,19 @@ function get_exp_data(choice){
                 categoryorder: 'category descending',
                 showgrid: false
               },
+              annotations: [{
+                text: "",
+                  font: {
+                  size: 13,
+                  color: 'rgb(116, 101, 130)',
+                },
+                showarrow: false,
+                align: 'center',
+                x: 0.5,
+                y: 1.1,
+                xref: 'paper',
+                yref: 'paper',
+            }]
           };
           var config = {responsive: true}  
           Plotly.newPlot('average', data, layout, config);
@@ -451,11 +479,13 @@ function average_fitness_heatmap(choice){
             height: 600,
             xaxis: {
               title: 'Position',
-              type: 'category'
+              type: 'category',
+              showgrid: false
             },
             yaxis: {
               title: 'Amino acid',
-              categoryorder: 'category descending'
+              categoryorder: 'category descending',
+              showgrid: false
             },
           };
           
@@ -474,10 +504,15 @@ function load_experiments(){
         success: function(response){
             console.log(response)
             html = '<table class = "table" id = "myTable">'
-            html += '<tr><th width = 60%><input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search..." title="Type in a name"></th> <th></th> <th></th></tr>'
+            html += '<tr><th></th><th width = 60%><input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search..." title="Type in a name"></th> <th></th></tr>'
             $.each(response, function(index, val) {
+              html += '<tr><td width = 20%>'
+              $.each(val, function(index, value) {
+                html += `<p><a href = 'inner?prot=`+value[0]+`' target = '_blank'> `+value[10]+`</a></p>`
+              });
+              html += '</td>'
 
-              html += `<tr>
+              html += `
                       <td width = 60%>
                             <p><a href = `+val[0][8]+` target = '_blank'>`+val[0][3]+`.</br> `+val[0][2]+` `+val[0][4]+` `+ val[0][5]+` `+val[0][6]+` `+val[0][7]+`</a></p>
                             <p>PMID: <a href = 'https://www.ncbi.nlm.nih.gov/pubmed/`+ val[0][9]+`' target = '_blank'>`+val[0][9]+`</a></p>
@@ -486,13 +521,8 @@ function load_experiments(){
                       <td width = 20%>
                             <p>`+val[0][13]+`: <a href = 'https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=`+val[0][12]+`' target = '_blank'>`+val[0][12]+`</a></p>
                       </td>
-                      <td width = 20%>
-                      `
-
-                $.each(val, function(index, value) {
-                  html += `<p><a href = 'inner?prot=`+value[0]+`' target = '_blank'> `+value[10]+`</a></p>`
-                });
-                html += `</td></tr>` 
+                      `                
+                html += `</tr>` 
               });
             html += '</table>'
             $('#experiments').html(html)
@@ -507,7 +537,7 @@ function myFunction() {
   table = document.getElementById("myTable");
   tr = table.getElementsByTagName("tr");
   for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
+    td = tr[i].getElementsByTagName("td")[1];
     if (td) {
       txtValue = td.textContent || td.innerText;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {

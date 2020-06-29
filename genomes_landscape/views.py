@@ -239,7 +239,11 @@ def get_experiment_summary(request):
                             paper,
                             pss,
                             pdb,
-                            full_name
+                            full_name,
+                            tax_id,
+                            year,
+                            title,
+                            uniprot
                         from experiments_summary
                         where exp_id_ = '''+exp_id+'''
                         ''')
