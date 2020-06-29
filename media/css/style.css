@@ -200,7 +200,7 @@ td p{
 		font-size: 2em;
 		-webkit-transition:all .3s;
 		-moz-transition:all .3s;
-		transition:all .3s
+		transition:all .3s;
         padding: 0px;
 	}
 	.navbar-default .navbar-nav>.active>a {
@@ -900,4 +900,13 @@ th input{
 
 #summary .row{
     margin-bottom: 3px;
+}
+#myInput {
+    width: 60%;
+    height: 45px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    font-size: 19px;
 }

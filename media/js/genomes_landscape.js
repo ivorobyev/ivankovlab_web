@@ -502,9 +502,9 @@ function load_experiments(){
           $("#experiments").html("<p>...</p>");
         },
         success: function(response){
-            console.log(response)
-            html = '<table class = "table" id = "myTable">'
-            html += '<tr><th></th><th width = 60%><input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search..." title="Type in a name"></th> <th></th></tr>'
+            html = '<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search..." title="Type in a name">'
+            html += '<table class = "table" id = "myTable">'
+            html += '<tr><th>Landscape</th><th>Taxon</th><th width = 50%>Publication</th><th>Year</th></tr>'
             $.each(response, function(index, val) {
               html += '<tr><td width = 20%>'
               $.each(val, function(index, value) {
@@ -513,22 +513,30 @@ function load_experiments(){
               html += '</td>'
 
               html += `
-                      <td width = 60%>
+                      <td width = 20%>
+                        <p>`+val[0][13]+`: <a href = 'https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=`+val[0][12]+`' target = '_blank'>`+val[0][12]+`</a></p>
+                      </td>
+                      <td width = 50%>
                             <p><a href = `+val[0][8]+` target = '_blank'>`+val[0][3]+`.</br> `+val[0][2]+` `+val[0][4]+` `+ val[0][5]+` `+val[0][6]+` `+val[0][7]+`</a></p>
                             <p>PMID: <a href = 'https://www.ncbi.nlm.nih.gov/pubmed/`+ val[0][9]+`' target = '_blank'>`+val[0][9]+`</a></p>
                             <p>`+val[0][11]+`</p>
                       </td>
-                      <td width = 20%>
-                            <p>`+val[0][13]+`: <a href = 'https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=`+val[0][12]+`' target = '_blank'>`+val[0][12]+`</a></p>
+                      <td width = 10%>
+                        <p>`+val[0][4]+`</p>
                       </td>
+                      
                       `                
                 html += `</tr>` 
               });
             html += '</table>'
-            $('#experiments').html(html)
+            $('#experiments').html(html);
         }
       })
 }
+
+$("#myTable").ready(function () {
+  $("#myTable").tablesorter();
+});
 
 function myFunction() {
   var input, filter, table, tr, td, i, txtValue;
@@ -537,7 +545,8 @@ function myFunction() {
   table = document.getElementById("myTable");
   tr = table.getElementsByTagName("tr");
   for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[1];
+
+    td = tr[i].getElementsByTagName("td")[2]
     if (td) {
       txtValue = td.textContent || td.innerText;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -545,7 +554,8 @@ function myFunction() {
       } else {
         tr[i].style.display = "none";
       }
-    }       
+    }   
+        
   }
 }
 
