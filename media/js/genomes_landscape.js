@@ -179,7 +179,7 @@ function get_exp_data(choice){
       url: "get_mutation_distribution/",
       data: {'choice' : choice},
       beforeSend: function() {
-        $("#mutation").html("")
+        $("#mutations").html("")
       },
       success: function(response){
          $("#mutations").html('');
@@ -194,10 +194,7 @@ function get_exp_data(choice){
               {
                 x: x_,
                 y: y_,
-                type: 'bar',
-                text: y_.map(String),
-                textposition: 'auto',
-                hoverinfo: 'none',
+                type: 'bar'
               }
             ];
 
