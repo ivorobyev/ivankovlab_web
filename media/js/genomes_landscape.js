@@ -501,9 +501,9 @@ function load_experiments(){
         success: function(response){
             html = '<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search..." title="Type in a name">'
             html += '<table class = "table" id = "myTable">'
-            html += '<tr><th>Landscape</th><th>Taxon</th><th width = 50%>Publication</th><th>Year</th></tr>'
+            html += '<tr><th>Landscape</th><th>Organism</th><th>Year</th><th width = 50%>Publication</th></tr>'
             $.each(response, function(index, val) {
-              html += '<tr><td width = 20%>'
+              html += '<tr><td width = 20%><p>'+val[0][11]+'</p>'
               $.each(val, function(index, value) {
                 html += `<p><a href = 'inner?prot=`+value[0]+`' target = '_blank'> `+value[10]+`</a></p>`
               });
@@ -511,15 +511,17 @@ function load_experiments(){
 
               html += `
                       <td width = 20%>
-                        <p>`+val[0][13]+`: <a href = 'https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=`+val[0][12]+`' target = '_blank'>`+val[0][12]+`</a></p>
+                        <p>`+val[0][13]+`<br>
+                        taxID: <a href = 'https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=`+val[0][12]+`' target = '_blank'>`+val[0][12]+`</a></p>
+                      </td>
+                      
+                      <td width = 10%>
+                        <p>`+val[0][4]+`</p>
                       </td>
                       <td width = 50%>
                             <p><a href = `+val[0][8]+` target = '_blank'>`+val[0][3]+`.</br> `+val[0][2]+` `+val[0][4]+` `+ val[0][5]+` `+val[0][6]+` `+val[0][7]+`</a></p>
                             <p>PMID: <a href = 'https://www.ncbi.nlm.nih.gov/pubmed/`+ val[0][9]+`' target = '_blank'>`+val[0][9]+`</a></p>
-                            <p>`+val[0][11]+`</p>
-                      </td>
-                      <td width = 10%>
-                        <p>`+val[0][4]+`</p>
+                            
                       </td>
                       
                       `                

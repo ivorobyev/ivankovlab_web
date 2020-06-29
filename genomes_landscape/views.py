@@ -23,7 +23,7 @@ def get_experiments(resp):
                           exp_name, 
                           parent_name,
                           title,
-                          authors,
+                          paper,
                           year,
                           journal,
                           volume,
