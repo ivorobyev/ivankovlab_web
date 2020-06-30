@@ -27,7 +27,7 @@
 	<link rel="prefetch" href='/media/images/loader.gif'>
 	{% render_block "css" %}
     </head>
-	<body onload = "">
+	<body>
 	<div id="loading"></div>
 	<nav class="navbar navbar-default">
 			<div class="container">
@@ -42,7 +42,14 @@
                         <h2>Fitness landscapes</h2>
                         <div class = "container">
 							<div class="form-group row">
-                                <div class = 'col-md-12' id = 'experiments'>
+                                <div class = 'col-md-12'>
+                                    <p>Fitness Landscape database</p>
+                                    <p>Welcome to the itness landscapes – the database of experimentally measured fitness landscapes of proteins!</p>
+                                    <p>Fitness landscapes are visualizations of genotype-to-phenotype maps which are usually obtained by high-throughput deep mutational scanning experiments.</p>
+                                    <div class = 'col-md-4 cond'><a href = "/genomes_landscape?tp=-1">All landscapes</a></div>
+                                    <div class = 'col-md-4 cond'><a href = "/genomes_landscape?tp=1">Landscapes with multiple mutants</a></div>
+                                    <div class = 'col-md-4 cond'><a href = "/genomes_landscape?tp=0">Landscapes with single mutants</a></div>
+                                    <p>Do not forget to cite the original publication!!!!</p>
 								</div>
                             </div>
 						</div>
@@ -55,7 +62,6 @@
 	<script src="/media/js/bootstrap.min.js"></script>
     <script src="/media/js/theme-scripts.js"></script>
 	<script src="/media/js/genomes_landscape.js"></script>
-	<script src="/media/js/tablesorter.js"></script>
 	<script src="/media/js/excellentexport.min.js"></script>
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 	<script type="text/javascript">
@@ -63,13 +69,6 @@
 			img1 = new Image();
 			img1.src = "/media/images/loader.gif";
 		}
-	</script>
-	<script>
-		function ready() {
-		var choice = location.search.split('tp=')[1]
-		load_experiments(choice)
-		}
-		document.addEventListener("DOMContentLoaded", ready);
 	</script>
     </body>
 </html>

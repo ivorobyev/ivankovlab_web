@@ -10,13 +10,18 @@ def g_index(request):
 def g_inner(request):    
     return render(request, "gl_inner.html",{})
 
+def g_welcome(request):    
+    return render(request, "welcome.html",{})
+
 def connect_db():
     return psycopg2.connect("dbname='experiments' user='postgreadmin' host='89.223.29.224' port = 5432 password='iliamilton355113'")
 
 @csrf_exempt
-def get_experiments(resp):
+def get_experiments(request):
     conn = connect_db()
-
+    tp_id = request.POST.get('choice')
+    print(tp_id)
+    cond = "WHERE ex_type = "+tp_id if tp_id in ['0','1'] else ""
     cursor = conn.cursor()
     cursor.execute('''
                    SELECT exp_id, 
@@ -33,8 +38,8 @@ def get_experiments(resp):
                           name,
                           full_name,
                           tax_id,
-                          organism                
-                   FROM experiments ORDER BY parent_name, exp_name
+                          organism        s        
+                   FROM experiments '''+cond+''' ORDER BY parent_name, exp_name 
                    ''')
 
     exps = cursor.fetchall()
@@ -243,7 +248,8 @@ def get_experiment_summary(request):
                             tax_id,
                             year,
                             title,
-                            uniprot
+                            uniprot,
+                            authors
                         from experiments_summary
                         where exp_id_ = '''+exp_id+'''
                         ''')

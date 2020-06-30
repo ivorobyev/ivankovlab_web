@@ -910,3 +910,13 @@ th input{
     padding: 15px;
     font-size: 19px;
 }
+.cond{
+    margin: 35px 0 45px 0;
+}
+.cond a{
+    font-size: 23px;
+    border: 1px solid #ddd;
+    border-radius:6px;
+    padding: 10px;
+    width:90%
+}

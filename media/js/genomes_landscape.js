@@ -77,13 +77,15 @@ function get_exp_data(choice){
           seq += "<br/><span style = 'font-size: 11px; color: red'>* red color means mutated positions</span></p></div>"
         }
         
-        phenotype_name = response[0][3] == null ? "&mdash;" : response[0][3];
+        phenotype_name = (response[0][3] == null || response[0][3] == '') ? "&mdash;" : response[0][3];
+
         $("#summary").html("<div class = 'row'><div class = 'col-md-3'>Sequence length</div><div class = 'col-md-5'>"+response[0][1]+"</div></div>\
                             <div class = 'row'><div class = 'col-md-3'>Phenotye name</div><div class = 'col-md-5'>"+phenotype_name+"</div></div>\
                             <div class = 'row'><div class = 'col-md-3'>Wild-type phenotype level</div><div class = 'col-md-5'>"+response[0][2]+"</div></div>\
                             <div class = 'row'><div class = 'col-md-3'>Full name</div> <div class = 'col-md-5'>"+response[0][7]+"</div></div>\
                             <div class = 'row'><div class = 'col-md-3'>Taxon ID</div> <div class = 'col-md-5'><a href = https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id="+response[0][8]+" target = '_blank'>"+response[0][8]+"</a></div></div>\
                             <div class = 'row'><div class = 'col-md-3'>Year</div> <div class = 'col-md-5'>"+response[0][9]+"</div></div>\
+                            <div class = 'row'><div class = 'col-md-3'>Authors</div> <div class = 'col-md-5'>"+response[0][12]+"</div></div>\
                             <div class = 'row'><div class = 'col-md-3'>Publication</div> <div class = 'col-md-5'>"+response[0][10]+"</div></div>\
                             <div class = 'row'><div class = 'col-md-3'>Uniprot</div> <div class = 'col-md-5'><a href = https://www.uniprot.org/uniprot/"+response[0][11]+" target = '_blank'>"+response[0][11]+"</a></div></div>\
                             <div class = 'row'><div class = 'col-md-12'>"+seq+"</div></div>")
@@ -491,10 +493,11 @@ function average_fitness_heatmap(choice){
   })
 }
 
-function load_experiments(){
+function load_experiments(choice){
     $.ajax({
         type: "POST",
         url: "exp_list/",
+        data: {"choice":choice},
         beforeSend: function() {
           $("#experiments").html("<p>...</p>");
         },
@@ -532,10 +535,6 @@ function load_experiments(){
         }
       })
 }
-
-$("#myTable").ready(function () {
-  $("#myTable").tablesorter();
-});
 
 function myFunction() {
   var input, filter, table, tr, td, i, txtValue;
