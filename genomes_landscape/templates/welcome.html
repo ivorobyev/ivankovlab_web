@@ -36,7 +36,7 @@
 				</div>
 			</div>
 		</nav>
-			<div class="container">
+			<div class="container" id = 'list'>
 				<div class="col-lg-12 text-center">
 					<div class="section-title">
                         <h2>Fitness landscapes</h2>
@@ -44,18 +44,30 @@
 							<div class="form-group row">
                                 <div class = 'col-md-12'>
                                     <p>Fitness Landscape database</p>
-                                    <p>Welcome to the itness landscapes – the database of experimentally measured fitness landscapes of proteins!</p>
+                                    <p>Welcome to the fitness landscapes – the database of experimentally measured fitness landscapes of proteins!</p>
                                     <p>Fitness landscapes are visualizations of genotype-to-phenotype maps which are usually obtained by high-throughput deep mutational scanning experiments.</p>
                                     <div class = 'col-md-4 cond'><a href = "/genomes_landscape?tp=-1">All landscapes</a></div>
                                     <div class = 'col-md-4 cond'><a href = "/genomes_landscape?tp=1">Landscapes with multiple mutants</a></div>
                                     <div class = 'col-md-4 cond'><a href = "/genomes_landscape?tp=0">Landscapes with single mutants</a></div>
-                                    <p>Do not forget to cite the original publication!!!!</p>
+
+                                    <div class = 'col-md-3'><a href='/genomes_landscape?org=coli'><img width = 80% src = '/media/images/EColi_hand.jpg'/></a></div>
+                                    <div class = 'col-md-3'><a href='/genomes_landscape?org=cerevisiae'><img width = 80% src = '/media/images/Yeast_hand.jpg'/></a></div>
+                                    
+                                    <div class = 'col-md-3'><a href='/genomes_landscape?org=musculus'><img width = 80% src = '/media/images/Mouse_hand.jpg'/></a></div>
+                                    <div class = 'col-md-3'><a href='/genomes_landscape?org=sapiens'><img width = 80% src = '/media/images/Human_hand.jpg'/></a></div>
+                                    
+                                    <p style = "margin-top: 490px;">Do not forget to cite the original publication!</p>
 								</div>
                             </div>
 						</div>
                     </div>
 				</div>
-			</div>
+            </div>
+            <footer class="footer">
+                <div class="container">
+                  <span class="text-muted">Ivankov laboratory, 2020</span>
+                </div>
+            </footer>
         
 	{% render_block "js" %}
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

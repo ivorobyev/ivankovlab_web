@@ -493,11 +493,11 @@ function average_fitness_heatmap(choice){
   })
 }
 
-function load_experiments(choice){
+function load_experiments(choice, org){
     $.ajax({
         type: "POST",
         url: "exp_list/",
-        data: {"choice":choice},
+        data: {"choice":choice, "org": org},
         beforeSend: function() {
           $("#experiments").html("<p>...</p>");
         },
@@ -507,6 +507,7 @@ function load_experiments(choice){
             html += '<tr><th>Landscape</th><th>Organism</th><th>Year</th><th width = 50%>Publication</th></tr>'
             $.each(response, function(index, val) {
               html += '<tr><td width = 20%><p>'+val[0][11]+'</p>'
+              val.sort((a, b) => a[10].localeCompare(b[10]));
               $.each(val, function(index, value) {
                 html += `<p><a href = 'inner?prot=`+value[0]+`' target = '_blank'> `+value[10]+`</a></p>`
               });

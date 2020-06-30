@@ -20,8 +20,12 @@ def connect_db():
 def get_experiments(request):
     conn = connect_db()
     tp_id = request.POST.get('choice')
-    print(tp_id)
-    cond = "WHERE ex_type = "+tp_id if tp_id in ['0','1'] else ""
+    org = request.POST.get('org')
+    if tp_id in ['0', '1']:
+        cond1 = "WHERE ex_type = "+tp_id if tp_id in ['0','1'] else ""
+    else:
+        cond1 = "WHERE organism like '%"+org+"%'" if org is not None else ""
+
     cursor = conn.cursor()
     cursor.execute('''
                    SELECT exp_id, 
@@ -38,8 +42,8 @@ def get_experiments(request):
                           name,
                           full_name,
                           tax_id,
-                          organism        s        
-                   FROM experiments '''+cond+''' ORDER BY parent_name, exp_name 
+                          organism      
+                   FROM experiments '''+cond1+''' ORDER BY parent_name, exp_name 
                    ''')
 
     exps = cursor.fetchall()

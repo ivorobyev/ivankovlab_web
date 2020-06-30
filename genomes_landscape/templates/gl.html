@@ -66,8 +66,9 @@
 	</script>
 	<script>
 		function ready() {
-		var choice = location.search.split('tp=')[1]
-		load_experiments(choice)
+		var choice = location.search.split('tp=')[1];
+		var org = location.search.split('org=')[1];
+		load_experiments(choice, org)
 		}
 		document.addEventListener("DOMContentLoaded", ready);
 	</script>
