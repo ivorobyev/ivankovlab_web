@@ -23,7 +23,7 @@ from django.views.static import serve
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^sequence_number/', include('sequence_number.urls')),
-    url(r'^genomes_landscape/', include('genomes_landscape.urls')),
+    url(r'^fitness_landscapes/', include('genomes_landscape.urls')),
     url(r'^', include('cms.urls')),
     url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}), 
     url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}), 

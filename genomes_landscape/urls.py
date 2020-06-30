@@ -3,8 +3,8 @@ from django.conf.urls import url
 from genomes_landscape import views
 
 urlpatterns = [
-    path(r'', views.g_index, name='genomes_landscape'),
-    path('welcome/', views.g_welcome, name='genomes_landscape_welcome'),
+    path('landscapes_list', views.g_index, name='genomes_landscape'),
+    path(r'', views.g_welcome, name='genomes_landscape_welcome'),
     path('inner/', views.g_inner, name='genomes_landscape_inner'),
     path('exp_list/', views.get_experiments, name='get_experiments_list'),
     path('inner/fit_distribution/', views.get_fitness_distribution, name='get_fitness_distribution'),
