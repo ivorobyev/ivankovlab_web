@@ -1,0 +1,91 @@
+{% load cms_tags sekizai_tags %}
+{% load static %}
+<html>
+    <head>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-158675469-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-158675469-1');
+    </script>
+
+        <title>Fitness landscapes</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="favicon.ico">
+	<link href="/media/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="/media/css/style.css" rel="stylesheet">
+	<link href="/media/css/sequence_number.css" rel="stylesheet">
+	<link rel="prefetch" href='/media/images/loader.gif'>
+	{% render_block "css" %}
+    </head>
+	<body>
+	<div id="loading"></div>
+	<nav class="navbar navbar-default">
+			<div class="container">
+				<div class="navbar-header page-scroll">
+                    <a class="navbar-brand page-scroll logo" href="/"><img src="/media/images/logo.png" alt="Skoltech logo"></a>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav" id = "nv"> 
+                      <a class="nav-item nav-link" href="/fitness_landscapes">Home</a>
+                      <a class="nav-item nav-link" href="/fitness_landscapes/landscapes_list">Search</a>
+                      <a class="nav-item nav-link active" href="/fitness_landscapes/help">Help<span class="sr-only">(current)</span></a>
+                    </div>
+			    </div>
+		</nav>
+			<div class="container" id = 'list'>
+				<div class="col-lg-12 text-center">
+					<div class="section-title">
+                        <h2>Help</h2>
+                        <div class = "container">
+							<div class="form-group row">
+                                <div class = 'col-md-12'>
+                                    <p><b>Database description</b></p>
+                                    <p>FitLand database contains genotype-to-phenotype maps (data and visualizations) for proteins from organisms across eukaryotes, bacteria, and viruses, which were obtained by high-throughput deep mutational scanning experiments.</p>
+                                    <p>&nbsp;</p>
+                                    <p><b>Database organization</b></p>
+                                    <p>The basic entry of our database is a fitness landscape, which is a table of genotype-to-phenotype connections measured for a certain protein at certain conditions. Fitness landscapes are grouped in sets by the research paper where they were described.</p>
+                                    <p>&nbsp;</p>
+                                    <p><b>Data access</b></p>
+                                    <p>Several lists of the fitness landscapes are available: all landscapes, landscapes containing both single and multiple mutants, and landscapes containing only single mutants. Independently, one can access fitness landscapes grouped by species. Search by protein name, species or publication is implemented.</p>
+                                    <p>&nbsp;</p>
+                                    <p><b>Data visualizations</b></p>
+                                    <p>The individual page created for each fitness landscape contains information about protein, organism, experimental conditions, method of phenotype measurements, and publication. Moreover, multiple visualizations are created for each landscape, including interactive protein structure, mutations count distribution, distribution of phenotypes, position-specific distribution of phenotypes, heatmap for phenotypes of single mutations, heatmap for averaged phenotypes of mutations, and violin plots for comparing the distributions of phenotypes between genotypes with different number of mutations.</p>
+                                    <p>&nbsp;</p>
+                                    <p><b>Data preparation</b></p>
+                                    <p>Genotype-to-phenotype maps were taken from the original publications if published. If data were published for mutations on a nucleotide level, we averaged phenotype effects over codons coding the same amino acid. In some publications, only raw read counts were available, in that case, we recalculated phenotypes ourselves but in strict accordance with the procedures described in the corresponding paper.</p>
+                                    <p>&nbsp;</p>
+                                    <p><b>Miscellaneous</b></p>
+                                    <p>For convenient matching between original publication and our database, we kept the same position ordering and the same phenotype scaling as in the original publication. Therefore, position numbers could be different from anything else, e.g., UniProt. Moreover, when comparing fitness landscapes assayed in different publications, one should keep in mind that measures of phenotype could have different biological meanings and be scaled in different ways.</p>
+                                
+                                </div>
+                            </div>
+						</div>
+                    </div>
+				</div>
+            </div>
+        
+	{% render_block "js" %}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="/media/js/bootstrap.min.js"></script>
+    <script src="/media/js/theme-scripts.js"></script>
+	<script src="/media/js/genomes_landscape.js"></script>
+	<script src="/media/js/excellentexport.min.js"></script>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script type="text/javascript">
+		if (document.images) {
+			img1 = new Image();
+			img1.src = "/media/images/loader.gif";
+		}
+	</script>
+    </body>
+</html>

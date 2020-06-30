@@ -4,6 +4,7 @@ from genomes_landscape import views
 
 urlpatterns = [
     path('landscapes_list', views.g_index, name='genomes_landscape'),
+    path('help', views.g_help, name='help'),
     path(r'', views.g_welcome, name='genomes_landscape_welcome'),
     path('inner/', views.g_inner, name='genomes_landscape_inner'),
     path('exp_list/', views.get_experiments, name='get_experiments_list'),

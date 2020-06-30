@@ -923,3 +923,15 @@ th input{
 footer{
     margin-top: 15% !important;
 }
+
+#nv{
+    width: 100%;
+    text-align: right;
+
+}
+
+#nv a{
+    margin-right: 15px;
+    font-size: 21px;
+    
+}

@@ -527,7 +527,6 @@ function load_experiments(choice, org){
                             <p>PMID: <a href = 'https://www.ncbi.nlm.nih.gov/pubmed/`+ val[0][9]+`' target = '_blank'>`+val[0][9]+`</a></p>
                             
                       </td>
-                      
                       `                
                 html += `</tr>` 
               });
@@ -545,9 +544,16 @@ function myFunction() {
   tr = table.getElementsByTagName("tr");
   for (i = 0; i < tr.length; i++) {
 
-    td = tr[i].getElementsByTagName("td")[3]
-    if (td) {
-      txtValue = td.textContent || td.innerText;
+    td0 = tr[i].getElementsByTagName("td")[0]
+    td1 = tr[i].getElementsByTagName("td")[1]
+    td2 = tr[i].getElementsByTagName("td")[2]
+    td3 = tr[i].getElementsByTagName("td")[3]
+    if (td3) {
+      txtValue = td0.textContent + td0.innerText + 
+                 td1.textContent + td1.innerText +
+                 td2.textContent + td2.innerText +
+                 td3.textContent + td3.innerText;
+      console.log(txtValue)
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
         tr[i].style.display = "";
       } else {

@@ -13,6 +13,9 @@ def g_inner(request):
 def g_welcome(request):    
     return render(request, "welcome.html",{})
 
+def g_help(request):    
+    return render(request, "help.html",{})
+
 def connect_db():
     return psycopg2.connect("dbname='experiments' user='postgreadmin' host='89.223.29.224' port = 5432 password='iliamilton355113'")
 
