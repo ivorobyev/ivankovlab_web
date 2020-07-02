@@ -3,6 +3,10 @@ from django.shortcuts import render
 import psycopg2
 from django.views.decorators.csrf import csrf_exempt
 from collections import defaultdict
+from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
+
+def test_redirect(request):
+    return redirect('genomes_landscape_welcome')
 
 def g_index(request):    
     return render(request, "gl.html",{})
@@ -46,7 +50,7 @@ def get_experiments(request):
                           full_name,
                           tax_id,
                           organism      
-                   FROM experiments '''+cond1+''' ORDER BY parent_name, exp_name 
+                   FROM experiments '''+cond1+''' ORDER BY parent_name, exp_name, order_
                    ''')
 
     exps = cursor.fetchall()

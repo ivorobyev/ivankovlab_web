@@ -507,7 +507,7 @@ function load_experiments(choice, org){
             html += '<tr><th>Landscape</th><th>Organism</th><th>Year</th><th width = 50%>Publication</th></tr>'
             $.each(response, function(index, val) {
               html += '<tr><td width = 20%><p>'+val[0][11]+'</p>'
-              val.sort((a, b) => a[10].localeCompare(b[10]));
+              //val.sort((a, b) => a[10].localeCompare(b[10]));
               $.each(val, function(index, value) {
                 html += `<p><a href = 'inner?prot=`+value[0]+`' target = '_blank'> `+value[10]+`</a></p>`
               });
