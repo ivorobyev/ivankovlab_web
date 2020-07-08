@@ -260,7 +260,8 @@ def get_experiment_summary(request):
                             year,
                             title,
                             uniprot,
-                            authors
+                            authors,
+                            structure_
                         from experiments_summary
                         where exp_id_ = '''+exp_id+'''
                         ''')

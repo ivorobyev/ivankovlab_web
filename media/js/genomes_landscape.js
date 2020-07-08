@@ -102,7 +102,7 @@ function get_exp_data(choice){
 
         plugin.loadMolecule({
           id: '1tqn',
-          url: 'https://www.ebi.ac.uk/pdbe/entry-files/download/pdb'+pdb_id.toLowerCase()+'.ent',
+          url: response[0][13],
           format: 'pdb'
         });
       }
