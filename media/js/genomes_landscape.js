@@ -1,3 +1,124 @@
+function get_z_mid(z) {
+  var z_max =Math. max(z);
+  var z_min = Math.min(z);
+  var z_mid = (z_max + z_min) / 2;
+  return z_mid;
+}
+// custom function
+function hexToRgb(hex) {
+  var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+  hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+    return r + r + g + g + b + b;
+  });
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  var r = parseInt(result[1], 16);
+  var g = parseInt(result[2], 16);
+  var b = parseInt(result[3], 16);
+  return result ? [r, g, b] : null;
+}
+//
+// copied from _annotated_heatmap.py
+//
+function to_rgb_color_list(color_str, Default) {
+  if (color_str.includes('rgb')) {
+    return color_str.replace(/[^0-9.,]+/g, '').split(',');
+  } else if (color_str.includes('#')) {
+    return hexToRgb(color_str);
+  } else {
+    return Default;
+  }
+}
+//
+// copied from _annotated_heatmap.py
+//
+function should_use_black_text(background_color) {
+  return (
+    background_color[0] * 0.299 +
+    background_color[1] * 0.587 +
+    background_color[2] * 0.114
+  ) > 186;
+}
+//
+// copied from _annotated_heatmap.py
+//
+function get_text_color(colorscale, reversescale) {
+  var white = '#FFFFFF';
+  var black = '#000000';
+  var colorscales = ['Greys', 'Greens', 'Blues', 'YIGnBu', 'YIOrRd', 'RdBu', 'Picnic', 'Jet', 'Hot', 'Blackbody', 'Earth', 'Electric', 'Viridis', 'Cividis'];
+  var colorscales_reverse = ['Reds'];
+  var min_text_color = black;
+  var max_text_color = black;
+  if ((colorscales.indexOf(colorscale) > -1) && reversescale) {
+    min_text_color = black;
+    max_text_color = white;
+  } else if ((colorscales.indexOf(colorscale) > -1)) {
+    min_text_color = white;
+    max_text_color = black;
+  } else if ((colorscales_reverse.indexOf(colorscale) > -1) && reversescale) {
+    min_text_color = white;
+    max_text_color = black;
+  } else if ((colorscales_reverse.indexOf(colorscale) > -1)) {
+    min_text_color = black;
+    max_text_color = white;
+  } else if (Array.isArray(colorscale)) {
+    var _min_col = to_rgb_color_list(colorscale.slice(0)[0][1], [255, 255, 255]);
+    var _max_col = to_rgb_color_list(colorscale.slice(-1)[0][1], [255, 255, 255]);
+    var min_col = _min_col;
+    var max_col = _max_col;
+    if (reversescale) {
+      // swap min max
+      min_col = _max_col;
+      max_col = _min_col;
+    }
+    if (should_use_black_text(min_col)) {
+      min_text_color = black;
+    } else {
+      min_text_color = white;
+    }
+    if (should_use_black_text(max_col)) {
+      max_text_color = black;
+    } else {
+      max_text_color = white;
+    }
+  }
+  return [min_text_color, max_text_color];
+}
+//
+// copied from _annotated_heatmap.py
+//
+function make_annotations(_x, _y, _z, colorscale) {
+  var text_colors = get_text_color(colorscale);
+  var min_text_color = text_colors[0];
+  var max_text_color = text_colors[1];
+  var z_mid = get_z_mid(_z);
+  var annotations = [];
+  for (var n = 0; n < _z.length; n++) {
+    var row = _z[n];
+    for (var m = 0; m < row.length; m++) {
+      var val = row[m];
+      var font_color = (val < z_mid) ? min_text_color : max_text_color;
+      annotations.push({
+        xref: 'x1',
+        yref: 'y1',
+        x: _x[m],
+        y: _y[n],
+        text: _z[n][m],
+        font: {
+          family: 'Arial',
+          size: 12,
+          color: font_color
+        },
+        showarrow: false
+      });
+    }
+  }
+  return annotations;
+}
+
+
+
+
+
 function get_colorscale(min, max, wt){
           function change_color(color, steps){
             $.each(color, function(index, val) {
@@ -243,7 +364,8 @@ function get_exp_data(choice){
                 z: z_,
                 type: 'mesh3d',
                 intensity: z_,
-                colorscale: 'Earth'
+                colorscale: 'Earth',
+                hovertemplate: 'Position: %{x} <br>' + 'Fitness: %{y} <br>' + 'Genotypes count: %{z} <extra></extra>',
               }
             ];
 
@@ -282,14 +404,16 @@ function get_exp_data(choice){
               y_.push(val[1])
               z_.push(val[2])
           });
+          colorscale = get_colorscale(Math.min(...z_), Math.max(...z_), response[0][3]);
           
           var data = [{
               x: x_,
               y: y_,
               z: z_,
-              colorscale: get_colorscale(Math.min(...z_), Math.max(...z_), response[0][3]),
+              colorscale: colorscale,
               type: 'heatmap',
-              hoverongaps: false
+              hoverongaps: false,
+              hovertemplate: 'Position: %{x} <br>' + 'Amino acid: %{y} <br>' + 'Fitness: %{z} <extra></extra>',
           }];
             
           var layout = {
@@ -304,20 +428,7 @@ function get_exp_data(choice){
                 title: 'Amino acid',
                 categoryorder: 'category descending',
                 showgrid: false
-              },
-              annotations: [{
-                text: "",
-                  font: {
-                  size: 13,
-                  color: 'rgb(116, 101, 130)',
-                },
-                showarrow: false,
-                align: 'center',
-                x: 0.5,
-                y: 1.1,
-                xref: 'paper',
-                yref: 'paper',
-            }]
+              }
           };
           var config = {responsive: true}  
           Plotly.newPlot('average', data, layout, config);
