@@ -935,3 +935,36 @@ footer{
     font-size: 21px;
     
 }
+
+.dataTables_length{
+    display: inline;
+}
+
+.dataTables_filter{
+    display: inline;
+}
+
+.dataTables_filter input{
+    width: 60%;
+    height: 45px;
+    border-radius: 5px;
+    margin: 0 0 10px 10px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    font-size: 19px;
+}
+
+.dataTables_paginate a{
+    margin-left: 10px;
+    font-size: 18px;
+}
+
+table.dataTable thead .sorting_asc {
+    background: url("http://cdn.datatables.net/1.10.0/images/sort_asc.png") no-repeat center right;
+  }
+  table.dataTable thead .sorting_desc {
+    background: url("http://cdn.datatables.net/1.10.0/images/sort_desc.png") no-repeat center right;
+  }
+  table.dataTable thead .sorting {
+    background: url("http://cdn.datatables.net/1.10.0/images/sort_both.png") no-repeat center right;
+  }

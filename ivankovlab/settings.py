@@ -61,7 +61,8 @@ INSTALLED_APPS = [
     'aldryn_boilerplates',
     'django.contrib.staticfiles',
     'sequence_number',
-    'genomes_landscape'
+    'genomes_landscape',
+    'datasets_db'
 ]
 
 MIDDLEWARE = [

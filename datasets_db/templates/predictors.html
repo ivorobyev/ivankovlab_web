@@ -1,0 +1,104 @@
+{% load cms_tags sekizai_tags %}
+{% load static %}
+<html>
+    <head>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-158675469-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-158675469-1');
+    </script>
+
+        <title>Datasets db</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="favicon.ico">
+	<link href="/media/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="/media/css/style.css" rel="stylesheet">
+	<link href="/media/css/sequence_number.css" rel="stylesheet">
+	<link rel="prefetch" href='/media/images/loader.gif'>
+	{% render_block "css" %}
+	<style>
+		*{
+		box-sizing: border-box;
+		}
+		table {
+		border-collapse: collapse;
+		width: 100%;
+		}
+		tr td { 
+		word-break: break-all;
+		}
+		#seq{
+			text-align: left;
+			font-family: monospace !important;
+			min-width: 350px !important;
+		}
+		#ph{
+			min-width: 50px !important;
+		}
+		.lst{
+			min-width: 110px !important;
+		}
+		.header{
+			position:sticky;
+			top: 0 ;
+			background-color: rgb(255, 255, 255);
+		}
+	
+	</style>
+    </head>
+	<body>
+	<div id="loading"></div>
+	<nav class="navbar navbar-default">
+			<div class="container">
+				<div class="navbar-header page-scroll">
+					<a class="navbar-brand page-scroll logo" href="/"><img src="/media/images/logo.png" alt="Skoltech logo"></a>
+				</div>
+			</div>
+		</nav>
+			<div class="container">
+				<div class="col-lg-12 text-center">
+					<div class="section-title">
+                        <h2></h2>
+                        <div class = "container">
+							<div class="form-group row">
+                                <div class = 'col-md-12' id = 'experiments'>
+								</div>
+                            </div>
+						</div>
+                    </div>
+				</div>
+			</div>
+        
+	{% render_block "js" %}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="/media/js/bootstrap.min.js"></script>
+    <script src="/media/js/theme-scripts.js"></script>
+	<script src="/media/js/datasets_db.js"></script>
+	<script src="/media/js/tablesorter.js"></script>
+	<script src="/media/js/excellentexport.min.js"></script>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script type="text/javascript">
+		if (document.images) {
+			img1 = new Image();
+			img1.src = "/media/images/loader.gif";
+		}
+    </script>
+    <script>
+		function ready() {
+		var choice = location.search.split('pred=')[1]
+		get_pred_data(choice);
+		}
+		document.addEventListener("DOMContentLoaded", ready);
+   </script>
+    </body>
+</html>
