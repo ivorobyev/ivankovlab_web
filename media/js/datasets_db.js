@@ -64,6 +64,14 @@ function load_mutations(){
             html += '</tbody></table>'
             $('#experiments').html(html);
             $("#myTable").DataTable();
+          
+            var blob = new Blob([response.map(e => e.join("\t")).join("\n")], {type: 'text/csv;charset=utf-8;' });
+            textFile = URL.createObjectURL(blob)
+            $('#download').html('<a id = "dwn_link">Download dataset</a>')
+            $('#dwn_link').attr("href", textFile)
+            $('#dwn_link').attr("download", "output.csv")
+            $('#dwn_link').attr("target", "blank")
+          
         }
       })
 }

@@ -25,58 +25,242 @@
 	{% render_block "css" %}
     </head>
     <body>
-        {% cms_toolbar %}
-	<nav class="navbar navbar-default">
-			<div class="container">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header page-scroll">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand page-scroll logo" href="#page-top"><img src="/media/images/logo.png" alt="Skoltech logo"></a>
-				</div>
-			</div>
-			<!-- /.container-fluid -->
-		</nav>
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<div class="section-title">
-						<h2>Ivankov Lab</h2>
+		{% cms_toolbar %}
+		<div class='container about'>
+				<div class='col-md-6-center'>
+
+					<div class="col-md-6-center">
+					<h1>Ivankov Lab</h1>
+					<nav class="navbar navbar-expand-lg navbar-light bg-light">
+						<div class="collapse navbar-collapse wp" id="navbarNav">
+						  <ul class="navbar-nav">
+							<li class="nav-item">
+							  <a class="nav-link" href="#about-us">About us</a>
+							</li>
+							<li class="nav-item">
+							  <a class="nav-link" href="#team">Team</a>
+							</li>
+							<li class="nav-item">
+							  <a class="nav-link" href="#projects">Projects</a>
+							</li>
+							<li class="nav-item">
+							  <a class="nav-link" href="#applications">Applications</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#publications">Publications</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#courses">Courses</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#thesis">Thesis defenses</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#contacts">Contacts</a>
+							</li>
+						  </ul>
+						</div>
+					</nav>
 					</div>
 				</div>
-			</div>
-		</div>
+				<div class='col-md-6-center about'>
+					<div class = 'section-title' id='about-us'>
+						<h2>About us</h2>
+					</div>
 
-		<div class = "container">
-			<div class = "row">
-				<div class = "col-md-3">
-					<div class="section-title"><p>Applications</p></div>
-					<div class="list-group">
-						<a class = "list-group-item list-group-item-action" href ="/sequence_number">Sequence Number</a>
+					<p>Start date &ndash; April 2019</p>
+					<p>The lab is based at <a href="https://crei.skoltech.ru/cls" target="_blank" rel="noopener noreferrer">Center of Life Sciences</a> of <a href="http://www.skoltech.ru/en" target="_blank" rel="noopener noreferrer">Skolkovo Institute of Science and Technology</a>. Our main research areas are protein bioinformatics, physics, and evolution.</p>
+					<p>One research direction of the lab is to improve prediction of protein stability change upon single mutation by combining machine learning and protein physics. Related topics are computational construction of more stable proteins and prediction of protein folding kinetics from protein three-dimensional structure. Another research direction is theoretical investigation of evolution with focus on multi-dimensional epistasis. More specifically, the lab develops computational methods and algorithms to find epistasis in experimental data and to estimate abundance of uni- and multi-dimensional epistasis in protein evolution.</p>
+				</div>
+
+				<div class='col-md-6-center about'>
+					<div class = 'section-title' id = 'team'>
+						<h2>Team</h2>
+					</div>
+
+					<div class="row">
+						<div class="col-md-4">
+						  <div class="thumbnail">
+							<a href="https://faculty.skoltech.ru/people/dmitryivankov">
+							  <div class='tm'>
+							  	<img src="/media/images/photo_2021-09-16_15-07-01.jpg" alt="Lights" style="width:100%">
+							  </div>
+							  <div class="caption">
+								<p> Dmitry Ivankov, supervisor</p>
+							  </div>
+							</a>
+						  </div>
+						</div>
+						<div class="col-md-4">
+							<div class="thumbnail">
+							  <a href="https://faculty.skoltech.ru/people/ekaterinaalaniia">
+								<div class='tm'>
+									<img src="/media/images/ekaterinaalaniia_avatar_1571416084.jpg" alt="Lights" style="width:100%">
+								</div>
+								<div class="caption">
+								  <p>Ekaterina Alaniia, research intern</p>
+								</div>
+							  </a>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="thumbnail">
+							  <a href="https://faculty.skoltech.ru/people/ekaterinaalaniia">
+								<div class='tm'>
+									<img src="/media/images/mKqpABT67A8.jpg" alt="Lights" style="width:100%">
+								</div>
+								<div class="caption">
+								  <p>Ilya Vorobyev, Programmer</p>
+								</div>
+							  </a>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="thumbnail">
+							  <a href="https://crei.skoltech.ru/cls/people/marinapak">
+								<div class='tm'>
+									<img src="/media/images/m_pak_photo.jpg" alt="Lights" style="width:100%">
+								</div>
+								<div class="caption">
+								  <p>Marina Pak, PhD-1</p>
+								</div>
+							  </a>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="thumbnail">
+							  <a href="https://crei.skoltech.ru/cls/people/carolinaerazo">
+								<div class='tm'>
+									<img src="/media/images/photo_2021-03-12_13-12-48.jpg" alt="Lights" style="width:100%">
+								</div>
+								<div class="caption">
+								  <p>Mar&iacute;a Carolina Erazo Mu&ntilde;oz, MSc-1</p>
+								</div>
+							  </a>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="thumbnail">
+							  <a href="https://crei.skoltech.ru/cls/people/nataliasivitskaia">
+								<div class='tm'>
+									<img src="/media/images/nataliasivitskaia_avatar_1581413980.jpeg" alt="Lights" style="width:100%">
+								</div>
+								<div class="caption">
+								  <p>Natalia Sivitskaya, MSc-2</p>
+								</div>
+							  </a>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-4">
+							<div class="thumbnail">
+							  <a href="#">
+								<div class='tm'>
+									<img src="/media/images/male-placeholder-image.jpeg" alt="Lights" style="width:100%">
+								</div>
+								<div class="caption">
+								  <p>Evgenii Zorin, MSc-1</p>
+								</div>
+							  </a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class='col-md-6-center about'>
+					<div class = 'section-title' id = 'projects'>
+						<h2>Projects</h2>
+					</div>
+
+					<h3>Prediction of Protein Stability Change Upon Mutation using Deep Learning</h3>
+					<p><strong>Marina Pak</strong></p>
+					<p>Protein stability is a crucial characteristic of a protein and predicting its alteration upon amino acid substitution is essential for 
+						understanding of protein folding mechanisms as well as engineering of proteins with desired properties. Experimental estimation of protein 
+						stability change upon mutation, being cumbersome and limitedly executable, makes computational prediction of this parameter a relevant and 
+						challenging task.</p>
+					<p>To date, a great number of computational methods for prediction of protein stability change upon amino acid substitutions have been developed, nevertheless, they are still far from delivering the level of robustness for wide application for protein engineering. Among the most common drawbacks are overfitting, bias towards destabilizing mutations, violation of anti-symmetry principle. The proposed research project is aimed to develop 
+					a computational tool for prediction of protein stability change upon mutation combining multiple approaches to overcome the limitations
+					of modern predictors. The predictor is designed to be based on deep neural network trained on a large balanced and symmetrized 
+					dataset of experimental data of folding free energy changes upon mutation.</p>
+
+					<h3>Evolution with focus on multi-dimensional epistasis and evolutionary models</h3>
+					<p><strong>Mar&iacute;a Carolina Erazo Mu&ntilde;oz</strong></p>
+					<p>The classical definition of epistasis centers on the interaction between different genes when expressing a 
+						certain phenotypic character, i.e. when the expression of one or more genes depends on the expression of others genes. 
+						The current understanding of epistasis also includes interaction between positions in protein, RNA, or DNA sequences [1]. 
+						The most straightforward approach to detect epistasis is to calculate epistatic coefficients from combinatorially complete 
+						datasets, which form hypercubes in sequence space [1, 2]. Most commonly, researchers apply Hadamard-Walsh transformation to 
+						get epistatic coefficients [1]; however, the “thermodynamic” transformation could also be applied [2]. 
+						Despite the formal link between the two approaches has been established [2], the empirical relationships have 
+						not yet been explored. </p>
+					<p>The aim of the project is to study the correlation between epistatic coefficients obtained by the Hadamard-Walsh 
+						and “thermodynamic” approaches using as an example all available fitness landscapes. The combinatorially complete 
+						datasets can be found effectively by HypercubeME program [4].</p>
+					<p>Additionally, we aim at checking which of the evolutionary models is compatible with epistatic pictures observed on 
+						the fitness landscapes. </p>
+					
+					<h3>Investigation of epistasis using composite mutations</h3> 
+					<p><strong>Evgenii Zorin</strong></p>
+					<p>Higher order epistasis is calculated by using hypercube structures, however, all the sequences required to create a 
+						combinatorially-complete hypercube are not always available. To this end, it is possible to calculate a certain type of 
+						epistasis by using composite mutations in hyperrectangles, which act as parallel vectors in the complete multidimensional 
+						space of hypercubes. Therefore, the project is to use hypercube-like algorithms to investigate epistasis in 
+						hyperrectangles arising from composite mutations. </p>	
+				</div>
+
+				<div class='col-md-6-center about'>
+					<div class = 'section-title' id = 'applications'>
+						<h2 id="apps">Applications</h2>
+					</div>
+					<p><a href="http://ivankovlab.ru/sequence_number/">Sequence number</a></p>
+					<p>...</p>
+				</div>
+
+				<div class='col-md-6-center about'>
+					<div class = 'section-title' id = 'applications'>
+						<h2 id="publications">Publications</h2>
 					</div>
 				</div>
-				<div class = "col-md-6 about">
-					{% placeholder "content" %}
 
-					<div class="section-title"><p>Contacts</p></div>
-					<p>3 Nobel street, 121205 Moscow, Russia</p>
-					<p>d.ivankov@skoltech.ru</p>
-					<p>+7 495 280 1481 ext. 3320</p>
+				<div class='col-md-6-center about'>
+					<div class = 'section-title' id = 'courses'>
+						<h2 id="courses">Courses</h2>
+					</div>
+					<p><a href="http://files.skoltech.ru/data/edu/syllabuses/2020/MA030372.pdf?v=166oul" target="_blank" rel="noopener noreferrer">Introduction to Programming for Biologists</a></p>
+					<p><a href="http://files.skoltech.ru/data/edu/syllabuses/2020/MA060375.pdf?v=eo8ldx" target="_blank" rel="noopener noreferrer">Structural Bioinformatics</a></p>
 				</div>
-				<div class = "col-md-3">
-					<div class="section-title"><p>Publications</p></div>
+
+				<div class='col-md-6-center about'>
+					<div class='section-title' id = 'thesis'>
+						<h2>Thesis defenses</h2>
+					</div>
+					<p>MSc 2020, Marina Pak: Study of influence of homology modeling on the prediction of protein stability change upon mutation</p>
+					<p>MSc 2021, Natalia Sivitskaia Search for amino acid substitutions stabilizing human ribonuclease inhibitor</p>
 				</div>
-			</div>
+
+				<div class='col-md-6-center about'>
+					<div class='section-title' id = 'contacts'>
+						<h2 id="contacts">Contacts</h2>
+					</div>
+
+					<p>e-mail: <a href="mailto:d.ivankov@skoltech.ru">d.ivankov@skoltech.ru</a></p>
+					<p>For directions on how to reach us, please see <a href="https://www.skoltech.ru/en/about/contacts/" target="_blank" rel="noopener noreferrer">here</a>.</p>
+					
+				</div>
 		</div>
+
+
 		<p id="back-top">
 			<a href="#top"><i class="fa fa-angle-up"></i></a>
 		</p>
 		<footer>
 			<div class="container text-center">
+				<p>e-mail: <a href="mailto:d.ivankov@skoltech.ru">d.ivankov@skoltech.ru</a></p>
 			</div>
 		</footer>
 	

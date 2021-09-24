@@ -31,7 +31,12 @@ h6 {
 	font-weight: 200;
 	letter-spacing: 0.4px;
 	font-family: "Raleway", Sans-serif;
-	color: #232323;
+    color: #232323;
+    text-align: center;
+    padding: 10px 10px 0 10px;
+}
+h1 {
+    font-size: 75px;    
 }
 
 p {
@@ -40,7 +45,8 @@ p {
 	font-weight: 300;
 	line-height: 28px;
 	letter-spacing: 0.2px;
-	color: #252525;
+    color: #252525;
+    padding: 0 15px 15px 15px;
 }
 
 a:hover, a:focus, a:active, a.active {
@@ -888,9 +894,6 @@ and (max-width : 480px) {
     font-size: 20px;
 }
 }
-.container{
-    width: 1570px !important;
-}
 #mutations, #plots, #landscape{
     height:600px;
 }
@@ -968,3 +971,24 @@ table.dataTable thead .sorting_asc {
   table.dataTable thead .sorting {
     background: url("http://cdn.datatables.net/1.10.0/images/sort_both.png") no-repeat center right;
   }
+
+h3{
+    font-size: 25px !important;
+}
+
+h2{
+    font-size: 30px;
+}
+.tm{
+    height:360px;
+    overflow: hidden;
+}
+
+.wp ul{
+    list-style: none;
+}
+
+.wp li{
+    padding: 0 10px 0 10px;
+    font-size: 20px;
+}

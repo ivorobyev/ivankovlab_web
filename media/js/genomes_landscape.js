@@ -328,7 +328,7 @@ function get_exp_data(choice){
         $('#download').html('<a id = "dwn_link">Download dataset</a>')
         $('#dwn_link').attr("href", textFile)
         $('#dwn_link').attr("download", "output.csv")
-        $('#dwn_link').attr("target", "_blank")
+        $('#dwn_link').attr("target", "blank")
       }
     })
 
