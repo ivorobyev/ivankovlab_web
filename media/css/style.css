@@ -376,7 +376,7 @@ span.reverse {
 4.1. About
 --------------------*/
 .about{
-    background-color: rgba(234, 234, 234, 0.29);
+    background-color: rgba(247, 247, 247, 0.29);
     margin-bottom: 35px;
 }
 
@@ -834,7 +834,6 @@ font-size: 11px;
 .logo > img{
     position: relative;
     height: 100%;
-
 }
 
 input{
@@ -930,13 +929,11 @@ footer{
 #nv{
     width: 100%;
     text-align: right;
-
 }
 
 #nv a{
     margin-right: 15px;
     font-size: 21px;
-    
 }
 
 .dataTables_length{
@@ -975,7 +972,6 @@ table.dataTable thead .sorting_asc {
 h3{
     font-size: 25px !important;
 }
-
 h2{
     font-size: 30px;
 }
@@ -991,4 +987,7 @@ h2{
 .wp li{
     padding: 0 10px 0 10px;
     font-size: 20px;
+}
+#a-main p{
+    font-size: 21px;
 }
