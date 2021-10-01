@@ -6,7 +6,6 @@ function load_mutations(){
             $("#experiments").html("<p>...</p>");
         },
         success: function(response){
-            //html = '<input type="text" id="myInput" onkeyup="search_table()" placeholder="Search..." title="Type in a name">'
             html = ''
             html += '<table class = "table table-fixed" id = "myTable">'
             html += `<thead><tr>
@@ -110,7 +109,6 @@ function get_dataset_data(choice){
     success: function(response){
         $('h2').html(choice);
         $(document).attr("title", choice);
-        //html = '<input type="text" id="myInput" onkeyup="search_table()" placeholder="Search..." title="Type in a name">'
         html = ''
         html += '<table class = "table table-fixed" id = "myTable">'
         html += `<thead><tr>

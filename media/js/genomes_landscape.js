@@ -40,9 +40,8 @@ function get_colorscale(min, max, wt){
 }
 
 function get_exp_data(choice){
-    $('#extend').remove()
+    $('#extend').remove();
     $("#loading").css("display", "block");
-    $('.collapse').collapse('hide')
 
     var ex_summary = $.ajax({
       type: "POST",
@@ -93,18 +92,24 @@ function get_exp_data(choice){
         pdb_id = response[0][6].slice(0, response[0][6].length - 2)
         $("#page-title").html(response[0][7])
 
-        var plugin = LiteMol.Plugin.create({target: '#structure',
-                                            viewportBackground: '#fff',
-                                            layoutState: {
-                                              hideControls: true
-                                            },
-                                            });
-
-        plugin.loadMolecule({
-          id: '1tqn',
-          url: response[0][13],
-          format: 'pdb'
+        let element = $('#structure');
+        let config = { backgroundColor: 'white' };
+        let viewer = $3Dmol.createViewer( element, config );
+        let pdbUri = 'https://files.rcsb.org/view/'+pdb_id+'.pdb';
+        jQuery.ajax( pdbUri, { 
+          success: function(data) {
+            let v = viewer;
+            v.addModel( data, "pdb" );                       
+            v.setStyle({}, {cartoon: {color: 'spectrum'}}); 
+            v.zoomTo();                                   
+            v.render();                                     
+            v.zoom(1.2, 1000);                     
+          },
+          error: function(hdr, status, err) {
+            console.error( "Failed to load PDB " + pdbUri + ": " + err );
+          },
         });
+
       }
     })
     
